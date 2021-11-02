@@ -95,10 +95,12 @@ public class Table{
         for(LocalDateTime r:reservationList){
             if (r.equals(t)){
                 reservationList.remove(i);
+                System.out.println("Reservation removed from Table "+getTableID()+" successfully.");
+                return;
             }
             i++;
         }
-        System.out.println("Reservation removed from Table "+getTableID()+" successfully.");
+        System.out.println("Reservation timing not found for Table " + getTableID());
     }
 
 }

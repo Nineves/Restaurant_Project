@@ -31,20 +31,25 @@ public class TableManager {
     }
 
     public static void printAvailableTables(){
-        int flag=0;
-        if (Restaurant.tablelist.size()==0){
-            System.out.println("Table list is empty!");
-            return;
-        }
-        for(int i=0;i<Restaurant.tablelist.size();i++){
-            Table curTable=Restaurant.tablelist.get(i);
-            if (!curTable.checkAvailability()){
-                System.out.println("INDEX "+i+1);
-                flag=1;
-                curTable.printInfo();}
-        }
-        if (flag==0){
-            System.out.println("All tables are occupied now.");
+        // int flag=0;
+        // if (Restaurant.tablelist.size()==0){
+        //     System.out.println("Table list is empty!");
+        //     return;
+        // }
+        // for(int i=0;i<Restaurant.tablelist.size();i++){
+        //     Table curTable=Restaurant.tablelist.get(i);
+        //     if (!curTable.checkAvailability()){
+        //         System.out.println("INDEX "+i+1);
+        //         flag=1;
+        //         curTable.printInfo();}
+        // }
+        // if (flag==0){
+        //     System.out.println("All tables are occupied now.");
+        // }
+        ArrayList<Table> availableTableList = getAvailableTables();
+        if (availableTableList != null) {
+          for (int i = 0; i < availableTableList.size(); i++)
+            availableTableList.get(i).printInfo();
         }
     }
 

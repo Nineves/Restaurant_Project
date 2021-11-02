@@ -138,4 +138,23 @@ public class ReservationManager {
         return true;
 
     }
+
+    public static void checkReservationExpiry(Table t, LocalDateTime dt) {
+		if(LocalDateTime.now().isAfter(dt.plusMinutes(30))) {
+			t.removeReservation(dt);	//Free up table for walk-in customers
+	    }
+	}
+	
+	public static void clearExpiredReservations(ArrayList<Table> tables) {
+		for(int i=0;i<tables.size();i++) {
+            Table t = tables.get(i);
+            ArrayList<LocalDateTime> tableReservationList = t.getReservationList();
+			if(tableReservationList != null) {
+                for (int j = 0; j < tableReservationList.size(); j++)
+				    checkReservationExpiry(t, tableReservationList.get(j));
+			}
+		}
+		System.out.println("Expired reservations purged!");
+	}
+
 }
