@@ -8,7 +8,7 @@ public class MainUI {
         System.out.println("2.  Manage/View Orders ");
         System.out.println("3.  Manage Reservations ");
         System.out.println("4.  View Available Tables ");
-        System.out.println("5.  Print Order Invoice ");
+        System.out.println("5.  Make payment and Print Order Invoice ");
         System.out.println("6.  Print Sale Revenue Report ");
         System.out.println("*** Enter '0' to exit *** ");
 

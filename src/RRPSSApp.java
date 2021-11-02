@@ -1,7 +1,12 @@
+import Controller.OrderManager;
+import Controller.TableManager;
+import Entities.Order;
 import Entities.Reservation;
 import Entities.Restaurant;
 import UI.MainUI;
 import UI.MenuUI;
+import UI.OrderUI;
+import UI.ReservationUI;
 
 import java.util.Scanner;
 
@@ -23,6 +28,18 @@ public class RRPSSApp {
                     MenuUI.menuUI();
                     break;
                 case 2:
+                    OrderUI.orderUI();
+                    break;
+                case 3:
+                    ReservationUI.reservationUI();
+                    break;
+                case 4:
+                    TableManager.printAvailableTables();
+                    break;
+                case 5:
+                    OrderUI.printOrderInvoice();
+                    break;
+                case 6:
 
 
             }

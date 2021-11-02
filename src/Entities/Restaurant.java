@@ -100,7 +100,7 @@ public class Restaurant{
     //int orderID, MenuItem item, int qty, Staff staff, Table table, boolean membership
     public static void initialOrders(){
         int orderID;
-        Order o1 = new Order(orderID = IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(1),true);
+        Order o1 = new Order(orderID = IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(1),true,5);
     }
 
 }

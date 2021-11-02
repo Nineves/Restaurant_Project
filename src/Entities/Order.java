@@ -1,5 +1,6 @@
 package Entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.*;
@@ -13,18 +14,18 @@ public class Order{
     private ArrayList<MenuItem> orderItems;
     private Map<String,Integer> quantityMap;
     private ArrayList<MenuItem> itemInfo;		//itemInfo is to store one food item into a array list
-    private Timestamp timeStamp;				//record the time for updating the order
+    //private Timestamp timeStamp;				//record the time for updating the order
     private Table table;
     private boolean isCompleted = false;
     public static Date date = new Date();
     public static long time = date.getTime();
+    private LocalDateTime timeStamp;
 
 
     public Order(int orderID, Staff staff, Table table, boolean membership,int numOfPax){
 
         this.orderID = orderID;
         this.table = table;
-        this.timeStamp = new Timestamp(time);
         this.membership = membership;
         this.staff = staff;
         this.orderItems = new ArrayList<MenuItem>();
@@ -45,7 +46,7 @@ public class Order{
     public int getNumOfPax() {
         return numOfPax;
     }
-    public void setTimeStamp(Timestamp s){
+    public void setTimeStamp(LocalDateTime s){
         this.timeStamp=s;
     }
 
@@ -65,12 +66,12 @@ public class Order{
 
     public boolean isCompleted() {return isCompleted;}
     public Table getTable() {return table;}
-    public Timestamp getTimeStamp(){return timeStamp;}
+    public LocalDateTime getTimeStamp(){return timeStamp;}
 
     public void setOrderItems(ArrayList<MenuItem> orderItems){this.orderItems = orderItems;}
     public void setCompleted(){isCompleted = true;}
 
-    public void calculatePrice() {
+    public double calculatePrice() {
         double totalPrice = 0;
         for(int i =0;i<orderItems.size();i++){
             MenuItem temp = orderItems.get(i);
@@ -84,6 +85,7 @@ public class Order{
             totalPrice = totalPrice*0.95;
         }
         price=totalPrice;
+        return price;
     }
 
     public void addFood(MenuItem food, int quantity) {
@@ -165,4 +167,5 @@ public class Order{
             curItem.printInfo();
         }
     }
+
 }

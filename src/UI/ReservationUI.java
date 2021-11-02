@@ -1,6 +1,9 @@
 package UI;
 
 import Controller.ReservationManager;
+import Controller.TableManager;
+import Entities.Reservation;
+import Entities.Restaurant;
 import Entities.Table;
 
 import java.time.LocalDate;
@@ -104,10 +107,97 @@ public class ReservationUI {
     }
 
     public static void updateReservation(){
+        if(Restaurant.reservationList.size()==0){
+            System.out.println("No reservation is in the list!" );
+        }
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Choose a reservation to update:" );
+        ReservationManager.printAllReservations();
+        int choice=sc.nextInt();
+        if (choice>=0&&choice<Restaurant.reservationList.size()){
+            Reservation curReservation=Restaurant.reservationList.get(choice-1);
+            System.out.println("Select an option: ");
+            System.out.println("[1] Update customer name ");
+            System.out.println("[2] Update contact number ");
+            System.out.println("[3] Change date and time");
+            System.out.println("[0] Exit ");
+            int selection=sc.nextInt();
+            while (selection<0||selection>3){
+                System.out.println("Invalid choice. Please choose again.");
+                selection=sc.nextInt();
+            }
+            switch (selection){
+                case 1:
+                    updateName(curReservation);
+                    break;
+                case 2:
+                    updateContactNumber(curReservation);
+                    break;
+                case 3:
+                    updateTime(curReservation);
+                    break;
+                default:
+                    break;
+            }
+
+            sc.close();
+        }
+        else {
+            System.out.println("Invalid choice. Returning back to Reservation UI...");
+        }
+
 
     }
 
+    public static void updateName(Reservation r){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Current customer name: "+r.getName());
+        System.out.println("Enter new name: ");
+        String newName=sc.nextLine();
+        ReservationManager.updateName(r,newName);
+        sc.close();
+    }
+
+    public static void updateContactNumber(Reservation r){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Current contact number: "+r.getContactNumber());
+        System.out.println("Enter new contact number: ");
+        String newContact=sc.nextLine();
+        ReservationManager.updateContact(r,newContact);
+        sc.close();
+
+    }
+
+    public static void updateTime(Reservation r){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Current Date"+r.getLocaldate());
+        System.out.println("Current Time"+r.getLocaltime());
+        System.out.println("Enter new reservation date: (in YYYY-MM-DD format)");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateString=sc.nextLine();
+        LocalDate newDate=LocalDate.parse(dateString,dateFormatter);
+
+        System.out.println("Please choose a new time slot: ");
+        System.out.println("[1] 11:00-12:00 ");
+        System.out.println("[2] 12:00-13:00 ");
+        System.out.println("[3] 13:00-14:00 ");
+        System.out.println("[4] 17:00-18:00 ");
+        System.out.println("[5] 18:00-19:00 ");
+        System.out.println("[6] 19:00-20:00 ");
+        int choiceOfTime=sc.nextInt();
+        LocalTime newTime= generateTime(choiceOfTime);
+        Table previousTable=r.getTable();
+        ReservationManager.updateTable(r,newDate,newTime);
+        sc.close();
+    }
+
     public static void removeReservation(){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the index of the reservation you would like to cancel: ");
+        ReservationManager.printAllReservations();
+        int choice=sc.nextInt();
+        ReservationManager.cancelReservation(choice);
+        sc.close();
 
     }
     public static void viewReservations(){

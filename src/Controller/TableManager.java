@@ -83,4 +83,22 @@ public class TableManager {
         }
         return toReserveTableList;
     }
+
+    public static boolean checkTableReserve(LocalDate d,LocalTime t,Table table){
+        LocalDateTime dt=LocalDateTime.of(d,t);
+        for(LocalDateTime item: table.getReservationList()){
+            if (item.equals(dt)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void removeReservation(LocalDate d,LocalTime t,Table table){
+        table.removeReservation(LocalDateTime.of(d,t));
+        if (table.getReservationList().size()==0){
+            table.setReserved(false);
+        }
+        System.out.println("Reservation removed successfully.");
+    }
 }

@@ -90,4 +90,15 @@ public class Table{
         return reservationList;
     }
 
+    public void removeReservation(LocalDateTime t){
+        int i=0;
+        for(LocalDateTime r:reservationList){
+            if (r.equals(t)){
+                reservationList.remove(i);
+            }
+            i++;
+        }
+        System.out.println("Reservation removed from Table "+getTableID()+" successfully.");
+    }
+
 }

@@ -9,6 +9,8 @@ import Entities.Restaurant;
 import Entities.Staff;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class OrderUI {
@@ -23,6 +25,7 @@ public class OrderUI {
     }
 
     public static void orderUI(){
+        displayOptions();
         Scanner sc = new Scanner(System.in);
         int option;
         option=sc.nextInt();
@@ -44,6 +47,7 @@ public class OrderUI {
                     return;
 
             }
+            displayOptions();
             option=sc.nextInt();
         }
         sc.close();
@@ -80,7 +84,8 @@ public class OrderUI {
             result=TableManager.validate(numOfPax,tableChoice);
         }
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        LocalDateTime now=LocalDateTime.now();
         System.out.println("Does the customer has membership? ('1' for 'Yes','0' for 'No') ");
         boolean membership=false;
         int m=sc.nextInt();
@@ -94,16 +99,17 @@ public class OrderUI {
         else if(m==0){
             membership=false;
         }
-        OrderManager.addNewOrder(staffChoice,numOfPax,tableChoice,timestamp,membership);
+        OrderManager.addNewOrder(staffChoice,numOfPax,tableChoice,now,membership);
 
 
     }
 
     public static void updateOrder(){
+        if(Restaurant.orderList.size()==0){
+            System.out.println("No order is available in the list.");
+            return; }
         System.out.println("Which order do you want to update?");
         OrderManager.printAllOrders();
-        if(Restaurant.orderList.size()==0)
-            return;
         Scanner sc = new Scanner(System.in);
         int choice=sc.nextInt();
         if(choice>=0&&choice<=Restaurant.orderList.size()){
@@ -114,6 +120,10 @@ public class OrderUI {
             System.out.println("3. update ordered items ");
             System.out.println("4. update membership ");
             System.out.println("0. Exit ");
+            while (choice<0||choice>3){
+                System.out.println("Invalid choice. Please choose again.");
+                choice=sc.nextInt();
+            }
             switch (choice){
                 case 1:
                     changeStaff(curOrder);
@@ -130,6 +140,10 @@ public class OrderUI {
                 default:
                     break;
             }
+        }
+        else {
+            System.out.println("Invalid input. Returning back to Order UI...");
+            return;
         }
 
 
@@ -168,6 +182,15 @@ public class OrderUI {
         OrderManager.updateTable(order,choice);
         System.out.println("Staff updated successfully!");
         sc.close();
+    }
+
+    public static void printOrderInvoice(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Choose an order: ");
+        OrderManager.printAllOrders();
+        int choice=sc.nextInt();
+        OrderManager.printInvoice(choice);
+
     }
 
     public static void updateItems(Order order){

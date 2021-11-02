@@ -3,12 +3,14 @@ package Controller;
 import Entities.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class OrderManager {
 
-    public static void addNewOrder(int staffChoice, int numOfPax, int tableChoice, Timestamp timeCreated,boolean membership){
+    public static void addNewOrder(int staffChoice, int numOfPax, int tableChoice, LocalDateTime timeCreated, boolean membership){
         Staff s=Restaurant.stafflist.get(staffChoice-1);
         Table t=Restaurant.tablelist.get(tableChoice-1);
         t.setOccupied(true);
@@ -109,4 +111,44 @@ public class OrderManager {
             System.out.println("Invalid index.");
         }
     }
+
+    public static void printInvoice(int idx){
+        if(idx<1||idx>Restaurant.orderList.size()){
+            System.out.println("Order does not exist.");
+        }
+        Order order=Restaurant.orderList.get(idx-1);
+        order.setCompleted();
+        ArrayList<MenuItem> itemList=order.getOrderItems();
+        Map<String,Integer> map=order.getQuantityMap();
+        double totalPrice=order.calculatePrice();
+        System.out.println("-------------------------------------");
+        System.out.println("OrderID : "+ order.getOrderID());
+        System.out.println("Served by: "+ order.getStaff().getName());
+        System.out.println("Date: "+ order.getTimeStamp());
+        System.out.println("");
+        System.out.println(String.format("%-10s %-20s %s","Qty","item name", "price"));
+        System.out.println("-------------------------------------");
+        for (int i=0;i<itemList.size();i++){
+            MenuItem curItem=order.getOrderItems().get(i);
+            String itemName=curItem.getName();
+            int itemQuantity = map.get(itemName);
+            double itemTotalPrice=itemQuantity*curItem.getPrice();
+            System.out.println(String.format("%-10d %-20s %.2f",itemQuantity,itemName, itemQuantity));
+        }
+        double GST = totalPrice-totalPrice/1.07;
+        totalPrice=totalPrice+GST;
+        System.out.println("-------------------------------------");
+        System.out.println(String.format("%-31s %.2f","7% GST",GST));
+        if(order.getMembership()) {
+            System.out.println(String.format("%-31s %s","Membership Discount","-5%"));
+            totalPrice = totalPrice*0.95;
+        }
+        System.out.println("-------------------------------------");
+        System.out.println(String.format("%-31s %.2f", "Total", totalPrice));
+        System.out.println();
+
+
+    }
+
+
 }
