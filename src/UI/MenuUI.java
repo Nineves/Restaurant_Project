@@ -172,5 +172,5 @@ public class MenuUI {
     public static void viewMenu(){
         MenuItemManager.printFullMenu();
     }
-
+    
 }

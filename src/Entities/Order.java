@@ -1,5 +1,7 @@
 package Entities;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Timestamp;
@@ -17,8 +19,8 @@ public class Order{
     //private Timestamp timeStamp;				//record the time for updating the order
     private Table table;
     private boolean isCompleted = false;
-    public static Date date = new Date();
-    public static long time = date.getTime();
+    // private LocalDate date;
+    // public LocalTime time;
     private LocalDateTime timeStamp;
 
 
