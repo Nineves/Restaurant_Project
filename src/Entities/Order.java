@@ -97,6 +97,7 @@ public class Order{
           }
           else{
               quantityMap.put(itemName,quantity);
+              orderItems.add(food);
               calculatePrice();
               System.out.println("Item "+itemName+"| quantity "+quantity+" added successfully.");
           }
