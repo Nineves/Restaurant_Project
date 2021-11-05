@@ -3,10 +3,7 @@ import Controller.TableManager;
 import Entities.Order;
 import Entities.Reservation;
 import Entities.Restaurant;
-import UI.MainUI;
-import UI.MenuUI;
-import UI.OrderUI;
-import UI.ReservationUI;
+import UI.*;
 
 import java.util.Scanner;
 
@@ -40,6 +37,10 @@ public class RRPSSApp {
                     OrderUI.printOrderInvoice();
                     break;
                 case 6:
+                    GenerateReportUI.generateReportUI();
+                default:
+                    System.out.println("Thank you for using this system.");
+                    break;
 
 
             }

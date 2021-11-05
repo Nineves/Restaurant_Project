@@ -21,10 +21,19 @@ public class GenerateReportUI {
             ReportManager.generateByDay(date);
         }
         else if(choice==2){
-            ReportManager.generateByMonth();
+            System.out.println("Please indicate the month: (integer from 1 to 12)");
+            int month = sc.nextInt();
+            while (month<1||month>12){
+                System.out.println("Invalid input. Please enter again. ");
+                month = sc.nextInt();
+            }
+            System.out.println("Please indicate the year:");
+            int year=sc.nextInt();
+            ReportManager.generateByMonth(month,year);
         }
         else {
             System.out.println("Invalid input.");
         }
+        sc.close();
     }
 }
