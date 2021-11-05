@@ -6,6 +6,7 @@ import Entities.Restaurant;
 import Entities.SetPackage;
 import Enums.FoodType;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuItemManager {
@@ -164,6 +165,45 @@ public class MenuItemManager {
                 currentItem.printInfo();
                 System.out.println();}
         }
+    }
+
+    public static ArrayList<MenuItem> getMainItems(){
+        ArrayList<MenuItem> mainItems=new ArrayList<MenuItem>();
+        for(MenuItem item:Restaurant.menulist){
+            if(item instanceof ALaCarte){
+                if(((ALaCarte) item).getFoodType().equals(FoodType.MAIN)){
+                    mainItems.add(item);
+                }
+            }
+        }
+        return mainItems;
+    }
+
+
+    public static ArrayList<MenuItem> getDessertItems(){
+        ArrayList<MenuItem> dessertItems=new ArrayList<MenuItem>();
+        for(MenuItem item:Restaurant.menulist){
+            if(item instanceof ALaCarte){
+                if(((ALaCarte) item).getFoodType().equals(FoodType.DESSERT)){
+                    dessertItems.add(item);
+                }
+            }
+        }
+        return dessertItems;
+
+    }
+
+    public static ArrayList<MenuItem> getDrinkItems(){
+        ArrayList<MenuItem> drinkItems=new ArrayList<MenuItem>();
+        for(MenuItem item:Restaurant.menulist){
+            if(item instanceof ALaCarte){
+                if(((ALaCarte) item).getFoodType().equals(FoodType.DRINKS)){
+                    drinkItems.add(item);
+                }
+            }
+        }
+        return drinkItems;
+
     }
 
 }
