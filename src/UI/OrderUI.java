@@ -50,7 +50,6 @@ public class OrderUI {
             displayOptions();
             option=sc.nextInt();
         }
-        sc.close();
     }
 
     public static void addNewOrder(){
@@ -120,11 +119,12 @@ public class OrderUI {
             System.out.println("3. update ordered items ");
             System.out.println("4. update membership ");
             System.out.println("0. Exit ");
-            while (choice<0||choice>3){
+            int selection=sc.nextInt();
+            while (selection<0||selection>3){
                 System.out.println("Invalid choice. Please choose again.");
                 choice=sc.nextInt();
             }
-            switch (choice){
+            switch (selection){
                 case 1:
                     changeStaff(curOrder);
                     break;
@@ -180,8 +180,7 @@ public class OrderUI {
             return;
         };
         OrderManager.updateTable(order,choice);
-        System.out.println("Staff updated successfully!");
-        sc.close();
+        System.out.println("Table updated successfully!");
     }
 
     public static void printOrderInvoice(){

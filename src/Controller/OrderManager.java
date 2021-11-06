@@ -17,7 +17,7 @@ public class OrderManager {
         t.setOccupied(true);
         t.setNoOfPax(numOfPax);
         int id=IDGenerator.generateUniqueId();
-        Order newOrder= new Order(id,s,t,membership,numOfPax);
+        Order newOrder= new Order(id,s,t,membership,numOfPax,timeCreated);
         addItemsToOrder(newOrder);
         newOrder.setTimeStamp(timeCreated);
         Restaurant.orderList.add(newOrder);
@@ -42,7 +42,7 @@ public class OrderManager {
             System.out.println("Choose an item to add: (press 0 to stop)");
             choice=sc.nextInt();
         }
-        sc.close();
+
     }
 
     public static void printAllOrders(){
@@ -67,7 +67,7 @@ public class OrderManager {
         Table newTable=Restaurant.tablelist.get(index-1);
         newTable.setNoOfPax(curTable.getNoOfPax());
         curTable.resetTable();
-
+        order.setTable(newTable);
     }
 
     public static void removeItemFromOrder(Order order){
@@ -134,7 +134,7 @@ public class OrderManager {
             String itemName=curItem.getName();
             int itemQuantity = map.get(itemName);
             double itemTotalPrice=itemQuantity*curItem.getPrice();
-            System.out.println(String.format("%-10d %-20s %.2f",itemQuantity,itemName, itemQuantity));
+            System.out.println(String.format("%-10d %-20s %.2f",itemQuantity,itemName, itemTotalPrice));
         }
         double GST = totalPrice-totalPrice/1.07;
         totalPrice=totalPrice+GST;

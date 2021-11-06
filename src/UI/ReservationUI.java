@@ -25,10 +25,11 @@ public class ReservationUI {
     }
 
     public static void reservationUI(Queue<Reservation> q){
+        displayOptions();
         Scanner sc = new Scanner(System.in);
         int option;
         option=sc.nextInt();
-        while (option<=4&&option>=1){
+        while (option<=5&&option>=1){
             switch (option){
                 case 1:
                     addNewReservation();
@@ -49,9 +50,9 @@ public class ReservationUI {
                     return;
 
             }
+            displayOptions();
             option=sc.nextInt();
         }
-        sc.close();
     }
     public static void addNewReservation(){
         Scanner sc=new Scanner(System.in);
@@ -67,6 +68,7 @@ public class ReservationUI {
         }
         System.out.println("Enter reservation date: (in YYYY-MM-DD format)");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        sc.nextLine();
         String dateString=sc.nextLine();
         LocalDate date=LocalDate.parse(dateString,dateFormatter);
         System.out.println("Please choose time slot: ");
@@ -146,7 +148,6 @@ public class ReservationUI {
                     break;
             }
 
-            sc.close();
         }
         else {
             System.out.println("Invalid choice. Returning back to Reservation UI...");
@@ -161,7 +162,7 @@ public class ReservationUI {
         System.out.println("Enter new name: ");
         String newName=sc.nextLine();
         ReservationManager.updateName(r,newName);
-        sc.close();
+
     }
 
     public static void updateContactNumber(Reservation r){
@@ -170,7 +171,7 @@ public class ReservationUI {
         System.out.println("Enter new contact number: ");
         String newContact=sc.nextLine();
         ReservationManager.updateContact(r,newContact);
-        sc.close();
+
     }
 
     public static void updateTime(Reservation r){
@@ -193,7 +194,6 @@ public class ReservationUI {
         LocalTime newTime= generateTime(choiceOfTime);
         Table previousTable=r.getTable();
         ReservationManager.updateTable(r,newDate,newTime);
-        sc.close();
     }
 
     public static void removeReservation(){
@@ -202,7 +202,7 @@ public class ReservationUI {
         ReservationManager.printAllReservations();
         int choice=sc.nextInt();
         ReservationManager.cancelReservation(choice);
-        sc.close();
+
 
     }
     public static void viewReservations(){

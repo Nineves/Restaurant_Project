@@ -55,6 +55,7 @@ public class Restaurant{
     }
     //initial set up of the staff
     public static void initialStaff(){
+        int staffID;
         stafflist = new ArrayList<Staff>();
         Staff s1 = new Staff(IDGenerator.generateUniqueId(),"Ernest", JobTitle.WAITER,Gender.MALE);
         Staff s2 = new Staff(IDGenerator.generateUniqueId(), "Yaxin Wan", JobTitle.SUPERVISOR, Gender.FEMALE);
@@ -104,17 +105,17 @@ public class Restaurant{
     //int orderID, MenuItem item, int qty, Staff staff, Table table, boolean membership
     public static void initialOrders(){
         orderList = new ArrayList<Order>();
-        Order o1 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(1),true,1, LocalDateTime.now());
+        Order o1 = new Order(IDGenerator.generateUniqueId(),stafflist.get(0), tablelist.get(1),true,1, LocalDateTime.now());
         o1.addFood(menulist.get(1), 1);
         o1.addFood(menulist.get(2), 2);
         o1.addFood(menulist.get(3), 3);
         orderList.add(o1);
-        Order o2 = new Order(IDGenerator.generateUniqueId(),stafflist.get(2), tablelist.get(2),true,2, LocalDateTime.now());
+        Order o2 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(2),true,2, LocalDateTime.now());
         o2.addFood(menulist.get(4), 4);
         o2.addFood(menulist.get(5), 5);
         o2.addFood(menulist.get(1), 1);
         orderList.add(o2);
-        Order o3 = new Order(IDGenerator.generateUniqueId(),stafflist.get(3), tablelist.get(3),true,3, LocalDateTime.now());
+        Order o3 = new Order(IDGenerator.generateUniqueId(),stafflist.get(2), tablelist.get(3),true,3, LocalDateTime.now());
         o3.addFood(menulist.get(2), 2);
         o3.addFood(menulist.get(3), 3);
         o3.addFood(menulist.get(4), 4);

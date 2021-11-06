@@ -64,6 +64,11 @@ public class Order{
     }
 
     public boolean isCompleted() {return isCompleted;}
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
     public Table getTable() {return table;}
     public LocalDateTime getTimeStamp(){return timestamp;}
 

@@ -7,9 +7,9 @@ import Entities.SetPackage;
 import Enums.FoodType;
 
 import java.util.*;
-import org.javatuples.Pair;
+//import org.javatuples.Pair;
 
-import javax.lang.model.util.ElementScanner14;
+//import javax.lang.model.util.ElementScanner14;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -207,7 +207,7 @@ public class MenuItemManager {
         for(int i=0;i<Restaurant.menulist.size();i++){
             MenuItem currentItem=Restaurant.menulist.get(i);
             if(currentItem instanceof SetPackage){
-                System.out.print("INDEX "+i+1);
+                System.out.print("INDEX "+(i+1));
                 currentItem.printInfo();
                 System.out.println();}
         }

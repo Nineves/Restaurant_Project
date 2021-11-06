@@ -33,7 +33,7 @@ public class RRPSSApp {
         int option=0;
         Scanner sc= new Scanner(System.in);
         option=sc.nextInt();
-        while(option>=1&&option<=6){
+        while(option>=1&&option<=7){
             switch (option){
                 case 1:
                     MenuUI.menuUI();
@@ -52,12 +52,17 @@ public class RRPSSApp {
                     break;
                 case 6:
                     GenerateReportUI.generateReportUI();
+                    break;
+                case 7:
+                    StaffUI.staffUI();
+                    break;
                 default:
                     System.out.println("Thank you for using this system.");
                     break;
 
 
             }
+            MainUI.displayOptions();
             option=sc.nextInt();
         }
 

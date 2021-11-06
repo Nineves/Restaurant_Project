@@ -81,9 +81,10 @@ public class TableManager {
                         break;
                     }
                 }
-                if (flag==0){
-                    toReserveTableList.add(curTable);
-                }
+
+            }
+            if (flag==0){
+                toReserveTableList.add(curTable);
             }
         }
         return toReserveTableList;

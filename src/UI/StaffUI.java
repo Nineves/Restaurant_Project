@@ -47,7 +47,6 @@ public class StaffUI {
             displayOptions();
             choice=sc.nextInt();
         }
-        sc.close();
     }
 
     public static void addStaff(){
@@ -61,7 +60,6 @@ public class StaffUI {
         JobTitle jobTitle=jobTitleSelection();
 
         StaffManager.addNewStaff(name,gender,jobTitle);
-        sc.close();
     }
 
     public static void updateStaff(){
@@ -81,6 +79,7 @@ public class StaffUI {
         switch (selection){
             case 1:
                 System.out.println("Enter new name: ");
+                sc.nextLine();
                 String newName=sc.nextLine();
                 StaffManager.updateName(choiceStaff,newName);
                 break;
@@ -93,7 +92,6 @@ public class StaffUI {
                 StaffManager.updateJobTitle(choiceStaff,newJobTitle);
                 break;
         }
-        sc.close();
     }
 
     public static Gender genderSelection(){
@@ -113,7 +111,6 @@ public class StaffUI {
         }
         else
             gender=Gender.FEMALE;
-        sc.close();
         return gender;
     }
 
@@ -142,7 +139,6 @@ public class StaffUI {
             default:
                 break;
         }
-        sc.close();
         return jobTitle;
 
     }

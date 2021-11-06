@@ -34,6 +34,5 @@ public class GenerateReportUI {
         else {
             System.out.println("Invalid input.");
         }
-        sc.close();
     }
 }

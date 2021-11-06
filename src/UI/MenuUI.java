@@ -10,7 +10,6 @@ import Enums.FoodType;
 import java.util.Scanner;
 
 public class MenuUI {
-
     public static void displayOptions(){
         System.out.println("===== Menu Management ===== ");
         System.out.println("1. Add New Menu Item ");
@@ -43,6 +42,9 @@ public class MenuUI {
                     return;
 
             }
+            displayOptions();
+            //sc.nextLine();
+            sc = new Scanner(System.in);
             option=sc.nextInt();
         }
     }
@@ -57,6 +59,7 @@ public class MenuUI {
                 return;
             case 1:
                 System.out.println("Please enter the name of the a la carte item: ");
+                sc2.nextLine();
                 String name=sc2.nextLine();
                 System.out.println("Please enter the description of the a la carte item: ");
                 String description=sc2.nextLine();
@@ -65,8 +68,11 @@ public class MenuUI {
                 System.out.println("Please choose the food type of the a la carte item : ");
                 int k=0;
                 FoodType foodType;
+                int i=1;
                 for(FoodType type:FoodType.values()){
+                    System.out.print("["+i+"]");
                     System.out.println(type);
+                    i++;
                 }
                 k=sc2.nextInt();
                 if(k>=1&&k<=FoodType.values().length){
@@ -80,6 +86,7 @@ public class MenuUI {
                 break;
             case 2:
                 System.out.println("Please enter the name of the set package item: ");
+                sc2.nextLine();
                 name=sc2.nextLine();
                 System.out.println("Please enter the description of the set package item: ");
                 description=sc2.nextLine();
@@ -91,7 +98,6 @@ public class MenuUI {
                 System.out.println("Invalid input. Return to Menu UI.");
                 return;
         }
-
     }
 
     public static void updateItem(){
@@ -118,12 +124,14 @@ public class MenuUI {
             switch (selection){
                 case 1:
                     System.out.println("Enter new name: ");
+                    sc.nextLine();
                     String newName=sc.nextLine();
                     MenuItemManager.updateName(choice,newName);
                     System.out.println("Item updated successfully.");
                     break;
                 case 2:
                     System.out.println("Enter new description: ");
+                    sc.nextLine();
                     String newDes=sc.nextLine();
                     MenuItemManager.updateDescription(choice,newDes);
                     System.out.println("Item updated successfully.");
@@ -156,7 +164,6 @@ public class MenuUI {
             }
 
         }
-        sc.close();
     }
 
     public static void removeItem(){
@@ -166,7 +173,6 @@ public class MenuUI {
         Scanner sc=new Scanner(System.in);
         choice=sc.nextInt();
         MenuItemManager.deleteMenuItem(choice);
-        sc.close();
     }
 
     public static void viewMenu(){

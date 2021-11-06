@@ -51,7 +51,7 @@ public class SetPackage extends MenuItem{
         System.out.println("*** Items in Set Package "+getName()+" ***");
         for (int i=0;i<list.size();i++){
             ALaCarte p= (ALaCarte) list.get(i);
-            System.out.print("INDEX "+i+1);
+            System.out.print("INDEX "+(i+1));
             System.out.println(" Name: "+p.getName());
             System.out.println(" Description: "+p.getDescription());
             System.out.println(" Price: "+p.getPrice());

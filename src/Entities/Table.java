@@ -30,19 +30,9 @@ public class Table{
 
     //reserve the number of people for this table
     public int setNoOfPax(int number){
-        if(isOccupied){
-            System.out.println("Sorry, this table has been occupied by someone else.");
-            return -1;
-        }
-        if(number <= capacity){
             this.numberOfPax = number;
             this.isOccupied = true;
             return 0;
-        }
-        else{
-            System.out.printf("No. of pax exceeds table capacity!\n");
-            return -1;
-        }
     }
 
     public void setTableID(int tableID) {
