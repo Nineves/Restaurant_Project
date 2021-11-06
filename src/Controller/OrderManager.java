@@ -1,6 +1,7 @@
 package Controller;
 
 import Entities.*;
+import Enums.FoodType;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -147,8 +148,9 @@ public class OrderManager {
         System.out.println(String.format("%-31s %.2f", "Total", totalPrice));
         System.out.println();
 
-
     }
+
+
 
 
 }

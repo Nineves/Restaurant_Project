@@ -171,4 +171,12 @@ public class Order{
         }
     }
 
+    public int getMonth(){
+        return timeStamp.getMonthValue();
+    }
+
+    public int getYear(){
+        return timeStamp.getYear();
+    }
+
 }
