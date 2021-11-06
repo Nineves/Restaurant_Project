@@ -6,15 +6,12 @@ import Entities.Restaurant;
 import Entities.SetPackage;
 import Enums.FoodType;
 
-<<<<<<< HEAD
 import java.util.*;
 import org.javatuples.Pair;
 
 import javax.lang.model.util.ElementScanner14;
-=======
 import java.util.ArrayList;
 import java.util.Scanner;
->>>>>>> a12f5495ca4bb7df240462f0d540a32ccfa44815
 
 public class MenuItemManager {
     //add a lar carte item
