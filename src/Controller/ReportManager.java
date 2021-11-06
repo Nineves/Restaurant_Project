@@ -20,7 +20,7 @@ public class ReportManager {
         ArrayList<Order> orderList= Restaurant.orderList;
         for (int i = 0; i < orderList.size(); i++) {
             Order o = orderList.get(i);
-            if (o.date.equals(date)) { // for orders in that day
+            if (o.getTimeStamp().toLocalDate().equals(date)) { // for orders in that day
                 ArrayList<MenuItem> orderItems = o.getOrderItems();
                 Map<String, Integer> qtymap = o.getQuantityMap();
                 for (int j = 0; j < orderItems.size(); j++) { //for items in order

@@ -6,6 +6,10 @@ import Entities.Restaurant;
 import Entities.SetPackage;
 import Enums.FoodType;
 
+import java.util.*;
+import org.javatuples.Pair;
+
+import javax.lang.model.util.ElementScanner14;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -131,12 +135,12 @@ public class MenuItemManager {
             System.out.println("Menu is empty!");
             return;
         }
-        for(int i=0;i<Restaurant.menulist.size();i++){
-            MenuItem currentItem=Restaurant.menulist.get(i);
-            System.out.print("INDEX "+i+1);
-            currentItem.printInfo();
-            System.out.println();
-        }
+        System.out.println("ALACARTE");
+        printALaCarteMenu();
+        System.out.println();
+        System.out.println("PACKAGES");
+        printSetPackageMenu();
+        System.out.println();
     }
 
     public static void printALaCarteMenu(){
@@ -144,14 +148,56 @@ public class MenuItemManager {
             System.out.println("Menu is empty!");
             return;
         }
+        ArrayList<MenuItem> main = new ArrayList<MenuItem>();
+        ArrayList<MenuItem> drinks = new ArrayList<MenuItem>();
+        ArrayList<MenuItem> dessert = new ArrayList<MenuItem>();
+        ArrayList<Integer> mainIdx = new ArrayList<Integer>();
+        ArrayList<Integer> drinksIdx = new ArrayList<Integer>();
+        ArrayList<Integer> dessertIdx = new ArrayList<Integer>();
         for(int i=0;i<Restaurant.menulist.size();i++){
             MenuItem currentItem=Restaurant.menulist.get(i);
             if(currentItem instanceof ALaCarte){
-                System.out.print("INDEX "+i+1);
-                currentItem.printInfo();
-                System.out.println();}
+                ALaCarte item = (ALaCarte) currentItem;
+                if (item.getFoodType() == FoodType.MAIN) {
+                    main.add(item);
+                    mainIdx.add(i+1);
+                }
+                else if (item.getFoodType() == FoodType.DRINKS) {
+                    drinks.add(item);
+                    drinksIdx.add(i+1);
+                }
+                else {
+                    dessert.add(item);
+                    dessertIdx.add(i+1);
+                }
+            }
+        }
+        System.out.println("MAINS");
+        for (int i = 0; i < main.size(); i++) {
+            MenuItem mi = main.get(i);
+            System.out.print("INDEX "+ mainIdx.get(i));
+            mi.printInfo();
+            System.out.println();
+        }
+        System.out.println("DRINKS");
+        for (int i = 0; i < drinks.size(); i++) {
+            MenuItem mi = drinks.get(i);
+            System.out.print("INDEX "+ drinksIdx.get(i));
+            mi.printInfo();
+            System.out.println();
+        }
+        System.out.println("DESSERTS");
+        for (int i = 0; i < dessert.size(); i++) {
+            MenuItem mi = dessert.get(i);
+            System.out.print("INDEX "+ dessertIdx.get(i));
+            mi.printInfo();
+            System.out.println();
         }
     }
+
+    // System.out.print("INDEX "+i+1);
+    // currentItem.printInfo();
+    // System.out.println();
 
     public static void printSetPackageMenu(){
         if (Restaurant.menulist.size()==0){

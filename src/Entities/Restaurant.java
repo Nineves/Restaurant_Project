@@ -4,6 +4,9 @@ import java.util.*;
 import Enums.Gender;
 import Enums.JobTitle;
 import Enums.FoodType;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Restaurant{
     Scanner scan = new Scanner(System.in);
@@ -18,6 +21,8 @@ public class Restaurant{
         initialTable();
         initialStaff();
         initialMenu();
+        initialOrders();
+        initialReservations();
     }
 
 
@@ -28,33 +33,32 @@ public class Restaurant{
         tablelist = new ArrayList<Table>();
         //Table[] tables = new Table[25];
         for(int i = 0; i < 5; i++){
-            tablelist.add(new Table(2, tableID));
+            tablelist.add(new Table(tableID, 2));
             tableID++;
         }
         for(int i = 0; i < 5; i++){
-            tablelist.add(new Table(4, tableID));
+            tablelist.add(new Table(tableID, 4));
             tableID++;
         }
         for(int i = 0; i < 5; i++){
-            tablelist.add(new Table(6, tableID));
+            tablelist.add(new Table(tableID, 6));
             tableID++;
         }
         for(int i=0; i < 5; i++){
-            tablelist.add(new Table(8, tableID));
+            tablelist.add(new Table(tableID, 8));
             tableID++;
         }
         for(int i=0;i<5;i++){
-            tablelist.add(new Table(10, tableID));
+            tablelist.add(new Table(tableID, 10));
             tableID++;
         }
     }
     //initial set up of the staff
     public static void initialStaff(){
-        int staffID;
         stafflist = new ArrayList<Staff>();
-        Staff s1 = new Staff(staffID = IDGenerator.generateUniqueId(),"Ernest", JobTitle.WAITER,Gender.MALE);
-        Staff s2 = new Staff(staffID = IDGenerator.generateUniqueId(), "Yaxin Wan", JobTitle.SUPERVISOR, Gender.FEMALE);
-        Staff s3 = new Staff(staffID = IDGenerator.generateUniqueId(), "John", JobTitle.MANAGER, Gender.MALE);
+        Staff s1 = new Staff(IDGenerator.generateUniqueId(),"Ernest", JobTitle.WAITER,Gender.MALE);
+        Staff s2 = new Staff(IDGenerator.generateUniqueId(), "Yaxin Wan", JobTitle.SUPERVISOR, Gender.FEMALE);
+        Staff s3 = new Staff(IDGenerator.generateUniqueId(), "John", JobTitle.MANAGER, Gender.MALE);
         stafflist.add(s1);
         stafflist.add(s2);
         stafflist.add(s3);
@@ -99,8 +103,32 @@ public class Restaurant{
 
     //int orderID, MenuItem item, int qty, Staff staff, Table table, boolean membership
     public static void initialOrders(){
-        int orderID;
-        Order o1 = new Order(orderID = IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(1),true,5);
+        orderList = new ArrayList<Order>();
+        Order o1 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(1),true,1, LocalDateTime.now());
+        o1.addFood(menulist.get(1), 1);
+        o1.addFood(menulist.get(2), 2);
+        o1.addFood(menulist.get(3), 3);
+        orderList.add(o1);
+        Order o2 = new Order(IDGenerator.generateUniqueId(),stafflist.get(2), tablelist.get(2),true,2, LocalDateTime.now());
+        o2.addFood(menulist.get(4), 4);
+        o2.addFood(menulist.get(5), 5);
+        o2.addFood(menulist.get(1), 1);
+        orderList.add(o2);
+        Order o3 = new Order(IDGenerator.generateUniqueId(),stafflist.get(3), tablelist.get(3),true,3, LocalDateTime.now());
+        o3.addFood(menulist.get(2), 2);
+        o3.addFood(menulist.get(3), 3);
+        o3.addFood(menulist.get(4), 4);
+        orderList.add(o3);
+    }
+
+    public static void initialReservations() {
+        reservationList = new ArrayList<Reservation>();
+        Reservation r1 = new Reservation("John", 3, "91882888", tablelist.get(4), LocalDate.now(), LocalTime.now());
+        Reservation r2 = new Reservation("Sally", 4, "92232323", tablelist.get(5), LocalDate.now().plusDays(1), LocalTime.now());
+        Reservation r3 = new Reservation("Tom", 5, "91545454", tablelist.get(6), LocalDate.now(), LocalTime.now().plusMinutes(5));
+        reservationList.add(r1);
+        reservationList.add(r2);
+        reservationList.add(r3);
     }
 
 }
