@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ReservationUI {
     public static void displayOptions(){
@@ -18,10 +20,11 @@ public class ReservationUI {
         System.out.println("2. Update Reservation ");
         System.out.println("3. Remove Reservation");
         System.out.println("4. View Reservations");
+        System.out.println("5. View last 3 expired reservations");
         System.out.println("0. Exit Order Management");
     }
 
-    public static void reservationUI(){
+    public static void reservationUI(Queue<Reservation> q){
         Scanner sc = new Scanner(System.in);
         int option;
         option=sc.nextInt();
@@ -38,6 +41,9 @@ public class ReservationUI {
                     break;
                 case 4:
                     viewReservations();
+                    break;
+                case 5:
+                    viewExpiredReservations(q);
                     break;
                 default:
                     return;
@@ -165,7 +171,6 @@ public class ReservationUI {
         String newContact=sc.nextLine();
         ReservationManager.updateContact(r,newContact);
         sc.close();
-
     }
 
     public static void updateTime(Reservation r){
@@ -202,5 +207,21 @@ public class ReservationUI {
     }
     public static void viewReservations(){
         ReservationManager.printAllReservations();
+    }
+
+    public static void viewExpiredReservations(Queue<Reservation> q) {
+        if (q.size() == 0)
+            System.out.println("No recent expired reservations");
+        else {
+            for (Reservation r : q) {
+                System.out.println("Reservation expired for: " + r.getName());
+                System.out.println("Contact num: " + r.getContactNumber());
+                System.out.println("Num Of Pax: " + r.getNoOfPax());
+                System.out.println("Table: " + r.getTable());
+                System.out.println("Date: " + r.getLocaldate());
+                System.out.println("Time: " + r.getLocaltime());
+                System.out.println();
+            }
+        }
     }
 }

@@ -1,11 +1,13 @@
 import Controller.OrderManager;
 import Controller.TableManager;
+import Controller.ReservationManager;
 import Entities.Order;
 import Entities.Reservation;
 import Entities.Restaurant;
+import Entities.Table;
 import UI.*;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class RRPSSApp {
     public static void main(String[] args){
@@ -14,6 +16,18 @@ public class RRPSSApp {
         System.out.println("System initializing....");
 
         Restaurant.initialRestaurant();   //initialize restaurant
+
+        Queue<Reservation> q = new LinkedList<Reservation>(); // initialise queue to store recently expired reservations
+        
+        TimerTask task = new TimerTask() { // to check expiry
+            public void run() {
+                ReservationManager.clearExpiredReservations(Restaurant.tablelist, q);
+            }
+        };
+
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(task, 0, 1000); // check expiry every second
+        
 
         MainUI.displayOptions();
         int option=0;
@@ -28,7 +42,7 @@ public class RRPSSApp {
                     OrderUI.orderUI();
                     break;
                 case 3:
-                    ReservationUI.reservationUI();
+                    ReservationUI.reservationUI(q);
                     break;
                 case 4:
                     TableManager.printAvailableTables();

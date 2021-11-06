@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class ReservationManager {
 
@@ -102,21 +104,21 @@ public class ReservationManager {
         System.out.println("Contact number is updated successfully!");
     }
 
-    public static void removeReservationFromList(Reservation r){
-        int i=0;
-        if(Restaurant.reservationList.size()==0){
-            System.out.println("Reservation list is empty!");
-            return;
-        }
-        for(Reservation reserv:Restaurant.reservationList){
-            if (reserv.getName().equals(r.getName()) && reserv.getLocaldate().equals(r.getLocaldate()) && reserv.getLocaltime().equals(r.getLocaltime())) {
-                Restaurant.reservationList.remove(i);
-                System.out.println("Reservation is removed from list successfully!");
-                return;
-            }
-            i++;
-        }
-    }
+    // public static void removeReservationFromList(Reservation r){
+    //     int i=0;
+    //     if(Restaurant.reservationList.size()==0){
+    //         System.out.println("Reservation list is empty!");
+    //         return;
+    //     }
+    //     for(Reservation reserv:Restaurant.reservationList){
+    //         if (reserv.getName().equals(r.getName()) && reserv.getLocaldate().equals(r.getLocaldate()) && reserv.getLocaltime().equals(r.getLocaltime())) {
+    //             Restaurant.reservationList.remove(i);
+    //             System.out.println("Reservation is removed from list successfully!");
+    //             return;
+    //         }
+    //         i++;
+    //     }
+    // }
 
     public static void cancelReservation(int index){
         if(Restaurant.reservationList.size()==0){
@@ -139,22 +141,35 @@ public class ReservationManager {
 
     }
 
-    public static void checkReservationExpiry(Table t, LocalDateTime dt) {
+    public static boolean checkReservationExpiry(Table t, LocalDateTime dt) {
 		if(LocalDateTime.now().isAfter(dt.plusMinutes(30))) {
 			t.removeReservation(dt);	//Free up table for walk-in customers
+            return true;
 	    }
+        return false;
 	}
 	
-	public static void clearExpiredReservations(ArrayList<Table> tables) {
+	public static void clearExpiredReservations(ArrayList<Table> tables, Queue<Reservation> q) {
 		for(int i=0;i<tables.size();i++) {
             Table t = tables.get(i);
             ArrayList<LocalDateTime> tableReservationList = t.getReservationList();
 			if(tableReservationList != null) {
-                for (int j = 0; j < tableReservationList.size(); j++)
-				    checkReservationExpiry(t, tableReservationList.get(j));
-			}
+                for (int j = 0; j < tableReservationList.size(); j++) {
+                    LocalDateTime dt = tableReservationList.get(j);
+                    if (checkReservationExpiry(t, dt)) { // if reservation is due to expire
+                        for (Reservation r : Restaurant.reservationList) {
+                            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()))) { // find reservation in reservationList
+                                if (q.size() == 3) { // add reservation to queue
+                                    q.remove();
+                                    q.add(r);
+                                }
+                                else q.add(r);
+                            }
+                        }       
+                    }
+                }
+            }
 		}
-		System.out.println("Expired reservations purged!");
 	}
 
 }

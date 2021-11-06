@@ -1,10 +1,6 @@
 package Entities;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class Order{
@@ -15,16 +11,16 @@ public class Order{
     private Staff staff;
     private ArrayList<MenuItem> orderItems;
     private Map<String,Integer> quantityMap;
-    private ArrayList<MenuItem> itemInfo;		//itemInfo is to store one food item into a array list
+    //private ArrayList<MenuItem> itemInfo;		//itemInfo is to store one food item into a array list
     //private Timestamp timeStamp;				//record the time for updating the order
     private Table table;
     private boolean isCompleted = false;
     // private LocalDate date;
     // public LocalTime time;
-    private LocalDateTime timeStamp;
+    private LocalDateTime timestamp;
 
 
-    public Order(int orderID, Staff staff, Table table, boolean membership,int numOfPax){
+    public Order(int orderID, Staff staff, Table table, boolean membership,int numOfPax, LocalDateTime timestamp){
 
         this.orderID = orderID;
         this.table = table;
@@ -34,8 +30,9 @@ public class Order{
         this.quantityMap = new HashMap<String,Integer>();
         this.price=0;
         this.numOfPax=numOfPax;
+        this.timestamp = timestamp;
         isCompleted = false;
-        itemInfo = null;
+        //itemInfo = null;
     }
 
     public int getOrderID(){return orderID;}
@@ -49,7 +46,7 @@ public class Order{
         return numOfPax;
     }
     public void setTimeStamp(LocalDateTime s){
-        this.timeStamp=s;
+        this.timestamp=s;
     }
 
     public void setStaff(Staff staff) {
@@ -68,7 +65,7 @@ public class Order{
 
     public boolean isCompleted() {return isCompleted;}
     public Table getTable() {return table;}
-    public LocalDateTime getTimeStamp(){return timeStamp;}
+    public LocalDateTime getTimeStamp(){return timestamp;}
 
     public void setOrderItems(ArrayList<MenuItem> orderItems){this.orderItems = orderItems;}
     public void setCompleted(){isCompleted = true;}
@@ -154,7 +151,7 @@ public class Order{
         System.out.println("Staff info: ");
         staff.printStaffInfo();
         System.out.println("Membership status: "+membership);
-        System.out.println("Timestamp: "+timeStamp);
+        System.out.println("Timestamp: "+ timestamp);
         System.out.println("IsCompleted: "+isCompleted);
         System.out.println("Total price: "+price);
 
@@ -172,11 +169,11 @@ public class Order{
     }
 
     public int getMonth(){
-        return timeStamp.getMonthValue();
+        return timestamp.getMonthValue();
     }
 
     public int getYear(){
-        return timeStamp.getYear();
+        return timestamp.getYear();
     }
 
 }
