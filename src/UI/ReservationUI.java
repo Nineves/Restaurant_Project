@@ -80,7 +80,7 @@ public class ReservationUI {
         System.out.println("[6] 19:00-20:00 ");
         int choiceOfTime=sc.nextInt();
         LocalTime time= generateTime(choiceOfTime);
-        int result=ReservationManager.addNewReservation(name,contactNum,numOfPax,date,time);
+        int result=ReservationManager.addNewReservation(name,contactNum,numOfPax,date,time,false);
         if(result==1){
             System.out.println("Reservation is added successfully.");
         }
@@ -122,7 +122,7 @@ public class ReservationUI {
         System.out.println("Choose a reservation to update:" );
         ReservationManager.printAllReservations();
         int choice=sc.nextInt();
-        if (choice>=0&&choice<Restaurant.reservationList.size()){
+        if (choice>0&&choice<=Restaurant.reservationList.size()){
             Reservation curReservation=Restaurant.reservationList.get(choice-1);
             System.out.println("Select an option: ");
             System.out.println("[1] Update customer name ");
@@ -176,8 +176,8 @@ public class ReservationUI {
 
     public static void updateTime(Reservation r){
         Scanner sc=new Scanner(System.in);
-        System.out.println("Current Date"+r.getLocaldate());
-        System.out.println("Current Time"+r.getLocaltime());
+        System.out.println("Current Date: "+r.getLocaldate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        System.out.println("Current Time: "+r.getLocaltime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         System.out.println("Enter new reservation date: (in YYYY-MM-DD format)");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateString=sc.nextLine();
@@ -192,7 +192,6 @@ public class ReservationUI {
         System.out.println("[6] 19:00-20:00 ");
         int choiceOfTime=sc.nextInt();
         LocalTime newTime= generateTime(choiceOfTime);
-        Table previousTable=r.getTable();
         ReservationManager.updateTable(r,newDate,newTime);
     }
 
@@ -217,9 +216,9 @@ public class ReservationUI {
                 System.out.println("Reservation expired for: " + r.getName());
                 System.out.println("Contact num: " + r.getContactNumber());
                 System.out.println("Num Of Pax: " + r.getNoOfPax());
-                System.out.println("Table: " + r.getTable());
-                System.out.println("Date: " + r.getLocaldate());
-                System.out.println("Time: " + r.getLocaltime());
+                System.out.println("Table: " + r.getTable().toString());
+                System.out.println("Date: " + r.getLocaldate().toString());
+                System.out.println("Time: " + r.getLocaltime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                 System.out.println();
             }
         }

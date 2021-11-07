@@ -23,7 +23,7 @@ public class StaffManager {
         }
         for(int i=0;i< Restaurant.stafflist.size();i++){
             Staff curStaff=Restaurant.stafflist.get(i);
-            System.out.println("INDEX "+i+1);
+            System.out.println("INDEX "+(i+1));
             curStaff.printStaffInfo();
         }
     }

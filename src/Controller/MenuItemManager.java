@@ -7,8 +7,6 @@ import Entities.SetPackage;
 import Enums.FoodType;
 
 import java.util.*;
-//import org.javatuples.Pair;
-
 //import javax.lang.model.util.ElementScanner14;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -135,10 +133,10 @@ public class MenuItemManager {
             System.out.println("Menu is empty!");
             return;
         }
-        System.out.println("ALACARTE");
+        System.out.println("***********************A LA CARTE*********************");
         printALaCarteMenu();
         System.out.println();
-        System.out.println("PACKAGES");
+        System.out.println("***********************SET PACKAGES*********************");
         printSetPackageMenu();
         System.out.println();
     }
@@ -172,21 +170,21 @@ public class MenuItemManager {
                 }
             }
         }
-        System.out.println("MAINS");
+        System.out.println("**********MAINS***********");
         for (int i = 0; i < main.size(); i++) {
             MenuItem mi = main.get(i);
             System.out.print("INDEX "+ mainIdx.get(i));
             mi.printInfo();
             System.out.println();
         }
-        System.out.println("DRINKS");
+        System.out.println("**********DRINKS***********");
         for (int i = 0; i < drinks.size(); i++) {
             MenuItem mi = drinks.get(i);
             System.out.print("INDEX "+ drinksIdx.get(i));
             mi.printInfo();
             System.out.println();
         }
-        System.out.println("DESSERTS");
+        System.out.println("**********DESSERTS***********");
         for (int i = 0; i < dessert.size(); i++) {
             MenuItem mi = dessert.get(i);
             System.out.print("INDEX "+ dessertIdx.get(i));

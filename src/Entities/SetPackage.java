@@ -58,7 +58,7 @@ public class SetPackage extends MenuItem{
             System.out.println(" Food Type: "+p.getFoodType());
             System.out.println();
         }
-        System.out.println("********************************************");
+        System.out.println();
     }
 
 

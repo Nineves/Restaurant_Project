@@ -101,8 +101,8 @@ public class MenuUI {
     }
 
     public static void updateItem(){
-        System.out.println("Which menu item do you want to update? ");
         MenuItemManager.printFullMenu();
+        System.out.println("Which menu item do you want to update? ");
         if(Restaurant.menulist.size()==0)
             return;
         Scanner sc=new Scanner(System.in);
@@ -167,8 +167,8 @@ public class MenuUI {
     }
 
     public static void removeItem(){
-        System.out.println("Select an item to remove: ");
         MenuItemManager.printFullMenu();
+        System.out.println("Select an item to remove: ");
         int choice;
         Scanner sc=new Scanner(System.in);
         choice=sc.nextInt();

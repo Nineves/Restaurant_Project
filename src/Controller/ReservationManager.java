@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 public class ReservationManager {
 
-    public static int addNewReservation(String name, String contact, int numOfPax,LocalDate date, LocalTime time){
+    public static int addNewReservation(String name, String contact, int numOfPax,LocalDate date, LocalTime time, boolean hasExpired){
         boolean resultD=validateDateTime(date,time);
         if (!resultD){
             System.out.println("The date and time is before current time. Invalid date.");
@@ -26,7 +26,7 @@ public class ReservationManager {
         }
         resultT.setReserved(true);
         resultT.addToReservationList(LocalDateTime.of(date,time));
-        Reservation newR= new Reservation(name,numOfPax,contact,resultT,date,time);
+        Reservation newR= new Reservation(name,numOfPax,contact,resultT,date,time,hasExpired);
         Restaurant.reservationList.add(newR);
         return 1;
     }
@@ -50,12 +50,18 @@ public class ReservationManager {
             //New Table found. Need to remove reservation in the previous table.
             TableManager.removeReservation(r.getLocaldate(),r.getLocaltime(),r.getTable());
             r.setTable(newTable);
+            r.setLocaldate(newDate);
+            r.setLocaltime(newTime);
+            r.setHasExpired(false);
             System.out.println("New table assigned.");
             return;
         }
         //no need to change table
         TableManager.removeReservation(r.getLocaldate(),r.getLocaltime(),r.getTable());
         r.getTable().addToReservationList(LocalDateTime.of(newDate,newTime));
+        r.setLocaldate(newDate);
+        r.setLocaltime(newTime);
+        r.setHasExpired(false);
         System.out.println("Date and time updated successfully.");
 
     }
@@ -89,7 +95,7 @@ public class ReservationManager {
         System.out.println("All reservations: ");
         for (int i=0;i<Restaurant.reservationList.size();i++){
             Reservation curR=Restaurant.reservationList.get(i);
-            System.out.println("INDEX "+i);
+            System.out.println("INDEX "+(i+1));
             curR.printInfo();
         }
     }
@@ -142,7 +148,7 @@ public class ReservationManager {
     }
 
     public static boolean checkReservationExpiry(Table t, LocalDateTime dt) {
-		if(LocalDateTime.now().isAfter(dt.plusMinutes(30))) {
+		if(LocalDateTime.now().isAfter(dt.plusSeconds(3))) {
 			t.removeReservation(dt);	//Free up table for walk-in customers
             return true;
 	    }
@@ -164,6 +170,7 @@ public class ReservationManager {
                                     q.add(r);
                                 }
                                 else q.add(r);
+                                r.setHasExpired(true);
                             }
                         }       
                     }

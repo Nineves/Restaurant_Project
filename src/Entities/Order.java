@@ -1,6 +1,7 @@
 package Entities;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Order{
@@ -151,15 +152,14 @@ public class Order{
     }
 
     public void printInfo(){
-        System.out.println("Order ID: "+orderID);
+        System.out.println("Order ID: "+ orderID);
         System.out.println("Table number: "+table.getTableID());
+        System.out.println("Membership status: "+membership);
+        System.out.println("Timestamp: "+ timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println("IsCompleted: "+isCompleted);
+        System.out.println("Total price: "+ String.format("%.2f", price));
         System.out.println("Staff info: ");
         staff.printStaffInfo();
-        System.out.println("Membership status: "+membership);
-        System.out.println("Timestamp: "+ timestamp);
-        System.out.println("IsCompleted: "+isCompleted);
-        System.out.println("Total price: "+price);
-
     }
 
     public void printItemsInOrder(){
