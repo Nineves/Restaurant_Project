@@ -4,9 +4,12 @@ import java.util.*;
 import Enums.Gender;
 import Enums.JobTitle;
 import Enums.FoodType;
+
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
+import Controller.ReservationManager;
 
 public class Restaurant{
     Scanner scan = new Scanner(System.in);
@@ -124,12 +127,9 @@ public class Restaurant{
 
     public static void initialReservations() {
         reservationList = new ArrayList<Reservation>();
-        Reservation r1 = new Reservation("John", 3, "91882888", tablelist.get(4), LocalDate.now(), LocalTime.now());
-        Reservation r2 = new Reservation("Sally", 4, "92232323", tablelist.get(5), LocalDate.now().plusDays(1), LocalTime.now());
-        Reservation r3 = new Reservation("Tom", 5, "91545454", tablelist.get(6), LocalDate.now(), LocalTime.now().plusMinutes(5));
-        reservationList.add(r1);
-        reservationList.add(r2);
-        reservationList.add(r3);
+        ReservationManager.addNewReservation("John", "91882888", 3, LocalDate.now(), LocalTime.now().plusSeconds(5), false);
+        ReservationManager.addNewReservation("Sally", "90203202", 4, LocalDate.now(), LocalTime.now().plusMinutes(5), false);
+        ReservationManager.addNewReservation("Tom", "95939392", 5, LocalDate.now(), LocalTime.now().plusSeconds(30), false);
     }
 
 }

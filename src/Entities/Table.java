@@ -13,6 +13,11 @@ public class Table{
     private boolean isReserved;
     private ArrayList<LocalDateTime> reservationList;
 
+    @Override
+    public String toString() {
+        return String.valueOf(tableID);
+    }
+
     //constructor
     public Table(int table_id, int capacity){
         this.tableID = table_id;

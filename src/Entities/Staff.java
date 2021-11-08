@@ -50,5 +50,6 @@ public class Staff{
         System.out.println("Staff name: "+name);
         System.out.println("Gender: "+gender);
         System.out.println("Job Title: "+jobTitle);
+        System.out.println();
     }
 }

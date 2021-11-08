@@ -5,9 +5,12 @@ import Enums.FoodType;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class OrderManager {
 
@@ -52,7 +55,7 @@ public class OrderManager {
         }
         for (int i=0;i<Restaurant.orderList.size();i++){
             Order curOrder=Restaurant.orderList.get(i);
-            System.out.println("INDEX "+i+1);
+            System.out.println("INDEX "+(i+1));
             curOrder.printInfo();
         }
     }
@@ -125,7 +128,7 @@ public class OrderManager {
         System.out.println("-------------------------------------");
         System.out.println("OrderID : "+ order.getOrderID());
         System.out.println("Served by: "+ order.getStaff().getName());
-        System.out.println("Date: "+ order.getTimeStamp());
+        System.out.println("Date: "+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         System.out.println("");
         System.out.println(String.format("%-10s %-20s %s","Qty","item name", "price"));
         System.out.println("-------------------------------------");
