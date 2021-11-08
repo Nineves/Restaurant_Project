@@ -54,7 +54,7 @@ public class SetPackage extends MenuItem{
             System.out.print("INDEX "+(i+1));
             System.out.println(" Name: "+p.getName());
             System.out.println(" Description: "+p.getDescription());
-            System.out.println(" Price: "+p.getPrice());
+            System.out.println(" Price: "+ String.format("%.2f", p.getPrice()));
             System.out.println(" Food Type: "+p.getFoodType());
             System.out.println();
         }

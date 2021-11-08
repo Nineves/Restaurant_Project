@@ -12,8 +12,8 @@ import java.util.*;
 public class ReportManager {
 
     public static void generateByDay(LocalDate date){
-        System.out.println("Report for " + date);
-        System.out.println("MenuItem | Qty");
+        System.out.println(String.format("*****************Report for %d %s %d*****************", date.getDayOfMonth(), date.getMonth(), date.getYear()));
+        System.out.println(String.format("%-50s | %-10s", "Menu Item", "Qty"));
         ArrayList<MenuItem> allOrderItems = new ArrayList<MenuItem>();
         Map<String,Integer> allQuantityMap = new HashMap<String,Integer>();
         double totalSales = 0;
@@ -43,16 +43,16 @@ public class ReportManager {
         }
         for (int i = 0; i < allOrderItems.size(); i++) {
             MenuItem oi = allOrderItems.get(i);
-            System.out.println(oi.getName() + " | " +  allQuantityMap.get(oi.getName()));
+            System.out.println(String.format("%-50s | %-10d", oi.getName(), allQuantityMap.get(oi.getName())));
         }
-        System.out.println("Total sales: " + totalSales);
+        System.out.println(String.format("********************Total sales: $%.2f********************", totalSales));
     }
 
     public static void generateByMonth(int month,int year){
         Month mt=Month.of(month);
         String monthName=mt.getDisplayName(TextStyle.FULL,Locale.ENGLISH);
-        System.out.println("Report for " + monthName+" in year "+ year);
-        System.out.println("MenuItem | Qty");
+        System.out.println(String.format("*****************Report for %s in %d*****************", monthName, year));
+        System.out.println(String.format("%-50s | %-10s", "Menu Item", "Qty"));
         ArrayList<MenuItem> allOrderItems = new ArrayList<MenuItem>();
         Map<String,Integer> allQuantityMap = new HashMap<String,Integer>();
         double totalSales = 0;
@@ -81,9 +81,9 @@ public class ReportManager {
     }
         for (int i = 0; i < allOrderItems.size(); i++) {
             MenuItem oi = allOrderItems.get(i);
-            System.out.println(oi.getName() + " | " +  allQuantityMap.get(oi.getName()));
+            System.out.println(String.format("%-50s | %-10d", oi.getName(), allQuantityMap.get(oi.getName())));
         }
-        System.out.println("Total sales: " + totalSales);
+        System.out.println(String.format("********************Total sales: $%.2f********************", totalSales));
         if (allOrderItems.size()==0){
             System.out.println("No order is made in this month!");
         }

@@ -77,7 +77,6 @@ public class MenuItemManager {
             System.out.println("Choose a item to add: (press '0' to stop)");
             choice=sc.nextInt();
         }
-        sc.close();
     }
 
     public static void removeItemFromSetPackage(SetPackage setPackage){
@@ -93,7 +92,6 @@ public class MenuItemManager {
             setPackage.printItems();
             choice=sc.nextInt();
         }
-        sc.close();
     }
 
     public static void updateItem(int index){

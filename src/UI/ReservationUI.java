@@ -216,7 +216,7 @@ public class ReservationUI {
                 System.out.println("Reservation expired for: " + r.getName());
                 System.out.println("Contact num: " + r.getContactNumber());
                 System.out.println("Num Of Pax: " + r.getNoOfPax());
-                System.out.println("Table: " + r.getTable().toString());
+                System.out.println("Table: " + r.getTable().getTableID());
                 System.out.println("Date: " + r.getLocaldate().toString());
                 System.out.println("Time: " + r.getLocaltime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                 System.out.println();

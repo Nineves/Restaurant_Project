@@ -22,7 +22,7 @@ public class ALaCarte extends MenuItem{
         System.out.println("*** A LAR CARTE ***");
         System.out.println("Name: "+this.getName());
         System.out.println("Description: "+this.getDescription());
-        System.out.println("Price: "+this.getPrice());
+        System.out.println("Price: "+ String.format("%.2f", this.getPrice()));
         System.out.println("Food type: "+this.getFoodType());
     }
 }

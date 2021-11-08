@@ -176,9 +176,8 @@ public class ReservationManager {
                 for (int j = 0; j < tableReservationList.size(); j++) {
                     LocalDateTime dt = tableReservationList.get(j);
                     if (checkReservationExpiry(t, dt)) { // if reservation is due to expire
-                        int index=0;
                         for (Reservation r : Restaurant.reservationList) {
-                            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()))) { // find reservation in reservationList
+                            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
                                 //Restaurant.reservationList.remove(index);
                                 if (q.size() == 3) { // add reservation to queue
                                     q.remove();
@@ -187,7 +186,6 @@ public class ReservationManager {
                                 else q.add(r);
                                 r.setHasExpired(true);
                             }
-                            index++;
                         }       
                     }
                 }
