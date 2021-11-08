@@ -120,7 +120,7 @@ public class ReservationUI {
         }
         Scanner sc=new Scanner(System.in);
         System.out.println("Choose a reservation to update:" );
-        ReservationManager.printAllReservations();
+        ReservationManager.printValidReservations();
         int choice=sc.nextInt();
         if (choice>0&&choice<=Restaurant.reservationList.size()){
             Reservation curReservation=Restaurant.reservationList.get(choice-1);
@@ -198,14 +198,14 @@ public class ReservationUI {
     public static void removeReservation(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the index of the reservation you would like to cancel: ");
-        ReservationManager.printAllReservations();
+        ReservationManager.printValidReservations();
         int choice=sc.nextInt();
         ReservationManager.cancelReservation(choice);
 
 
     }
     public static void viewReservations(){
-        ReservationManager.printAllReservations();
+        ReservationManager.printValidReservations();
     }
 
     public static void viewExpiredReservations(Queue<Reservation> q) {

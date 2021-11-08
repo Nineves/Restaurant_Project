@@ -33,6 +33,7 @@ public class Order{
         this.numOfPax=numOfPax;
         this.timestamp = timestamp;
         isCompleted = false;
+        table.setOccupied(true);
         //itemInfo = null;
     }
 

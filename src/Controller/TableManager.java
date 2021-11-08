@@ -18,17 +18,18 @@ public class TableManager {
         ArrayList<Table> availableTableList = new ArrayList<Table>();
         for(int i=0;i< Restaurant.tablelist.size();i++){
             Table curTable=Restaurant.tablelist.get(i);
-            if(!curTable.checkAvailability()){
+            if(!curTable.checkAvailability()&&!curTable.checkReserved(LocalDateTime.now())) //the table is not occupied and not reserved in advance
                 //not occupied
                 availableTableList.add(curTable);
             }
-        }
+
         if(availableTableList.size()==0){
             System.out.println("All tables are occupied now.");
             return null;
         }
         return availableTableList;
     }
+
 
     public static void printAvailableTables(){
         // int flag=0;

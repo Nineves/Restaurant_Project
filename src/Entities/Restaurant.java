@@ -35,24 +35,24 @@ public class Restaurant{
         int tableID = 1;
         tablelist = new ArrayList<Table>();
         //Table[] tables = new Table[25];
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 2; i++){
             tablelist.add(new Table(tableID, 2));
             tableID++;
         }
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 2; i++){
             tablelist.add(new Table(tableID, 4));
             tableID++;
         }
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 2; i++){
             tablelist.add(new Table(tableID, 6));
             tableID++;
         }
-        for(int i=0; i < 5; i++){
+        for(int i=0; i < 2; i++){
             tablelist.add(new Table(tableID, 8));
             tableID++;
         }
-        for(int i=0;i<5;i++){
-            tablelist.add(new Table(tableID, 10));
+        for(int i=0;i<2;i++){
+            tablelist.add(new Table(tableID, 12));
             tableID++;
         }
     }
@@ -108,21 +108,33 @@ public class Restaurant{
     //int orderID, MenuItem item, int qty, Staff staff, Table table, boolean membership
     public static void initialOrders(){
         orderList = new ArrayList<Order>();
-        Order o1 = new Order(IDGenerator.generateUniqueId(),stafflist.get(0), tablelist.get(1),true,1, LocalDateTime.now());
+
+        Order o1 = new Order(IDGenerator.generateUniqueId(),stafflist.get(0), tablelist.get(1),true,1, LocalDateTime.of(LocalDate.of(2021,10,5),LocalTime.of(9,00)));
         o1.addFood(menulist.get(1), 1);
         o1.addFood(menulist.get(2), 2);
         o1.addFood(menulist.get(3), 3);
+        o1.setCompleted();
         orderList.add(o1);
-        Order o2 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(2),true,2, LocalDateTime.now());
+        Order o2 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(2),true,2, LocalDateTime.of(LocalDate.of(2021,10,6),LocalTime.of(21,00)));
         o2.addFood(menulist.get(4), 4);
         o2.addFood(menulist.get(5), 5);
         o2.addFood(menulist.get(1), 1);
         orderList.add(o2);
-        Order o3 = new Order(IDGenerator.generateUniqueId(),stafflist.get(2), tablelist.get(3),true,3, LocalDateTime.now());
+        Order o3 = new Order(IDGenerator.generateUniqueId(),stafflist.get(2), tablelist.get(4),true,3, LocalDateTime.of(LocalDate.of(2021,10,6),LocalTime.of(13,21)));
         o3.addFood(menulist.get(2), 2);
         o3.addFood(menulist.get(3), 3);
         o3.addFood(menulist.get(4), 4);
         orderList.add(o3);
+        Order o4 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(6),true,5, LocalDateTime.of(LocalDate.of(2021,10,6),LocalTime.of(15,20)));
+        o3.addFood(menulist.get(2), 2);
+        o3.addFood(menulist.get(3), 3);
+        o3.addFood(menulist.get(4), 4);
+        orderList.add(o4);
+        Order o5 = new Order(IDGenerator.generateUniqueId(),stafflist.get(0), tablelist.get(9),true,10, LocalDateTime.now());
+        o3.addFood(menulist.get(2), 2);
+        o3.addFood(menulist.get(3), 3);
+        o3.addFood(menulist.get(4), 4);
+        orderList.add(o5);
     }
 
     public static void initialReservations() {

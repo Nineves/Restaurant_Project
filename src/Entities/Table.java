@@ -98,4 +98,13 @@ public class Table{
         System.out.println("Reservation timing not found for Table " + getTableID());
     }
 
+    public boolean checkReserved(LocalDateTime dt){
+        for (LocalDateTime dateTime:reservationList){
+            if(dt.isAfter(dateTime.minusMinutes(30))&&dt.isBefore(dateTime.plusMinutes(30))){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

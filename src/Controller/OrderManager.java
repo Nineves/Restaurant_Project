@@ -122,6 +122,8 @@ public class OrderManager {
         }
         Order order=Restaurant.orderList.get(idx-1);
         order.setCompleted();
+        Table curTable=order.getTable();
+        curTable.setOccupied(false);
         ArrayList<MenuItem> itemList=order.getOrderItems();
         Map<String,Integer> map=order.getQuantityMap();
         double totalPrice=order.calculatePrice();

@@ -15,6 +15,7 @@ public class GenerateReportUI {
         int choice=sc.nextInt();
         if(choice==1){
             System.out.println("Please indicate the date (in YYYY-MM-DD format): ");
+            sc.nextLine();
             String dateString=sc.nextLine();
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date=LocalDate.parse(dateString,dateFormatter);
