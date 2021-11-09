@@ -77,7 +77,7 @@ public class TableManager {
                 for (LocalDateTime dt:rList){
                     LocalDate d=dt.toLocalDate();
                     LocalTime t=dt.toLocalTime();
-                    if (d.equals(date)&&t.equals(time)){
+                    if (d.equals(date) && t.minusHours(1).isBefore(time) && t.plusHours(1).isAfter(time)){
                         flag=1;
                         break;
                     }

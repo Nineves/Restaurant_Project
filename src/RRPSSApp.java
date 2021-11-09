@@ -59,8 +59,6 @@ public class RRPSSApp {
                 default:
                     System.out.println("Thank you for using this system.");
                     break;
-
-
             }
             MainUI.displayOptions();
             option=sc.nextInt();

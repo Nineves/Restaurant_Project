@@ -75,7 +75,10 @@ public class Order{
     public LocalDateTime getTimeStamp(){return timestamp;}
 
     public void setOrderItems(ArrayList<MenuItem> orderItems){this.orderItems = orderItems;}
-    public void setCompleted(){isCompleted = true;}
+    public void setCompleted(){
+        isCompleted = true;
+        
+    }
 
     public double calculatePrice() {
         double totalPrice = 0;

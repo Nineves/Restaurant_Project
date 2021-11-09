@@ -114,6 +114,7 @@ public class Restaurant{
         o1.addFood(menulist.get(2), 2);
         o1.addFood(menulist.get(3), 3);
         o1.setCompleted();
+        o1.getTable().setOccupied(false);
         orderList.add(o1);
         Order o2 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(2),true,2, LocalDateTime.of(LocalDate.of(2021,10,6),LocalTime.of(21,00)));
         o2.addFood(menulist.get(4), 4);

@@ -44,7 +44,6 @@ public class MenuUI {
             }
             displayOptions();
             //sc.nextLine();
-            sc = new Scanner(System.in);
             option=sc.nextInt();
         }
     }
@@ -117,8 +116,8 @@ public class MenuUI {
             if(cur instanceof ALaCarte)
                 System.out.println("4. update food type");
             else if(cur instanceof SetPackage)
-            {System.out.println("5. add item to this setPackage");
-                System.out.println("6. remove item from this setPackage");}
+            {System.out.println("4. add item to this setPackage");
+                System.out.println("5. remove item from this setPackage");}
             int selection;
             selection=sc.nextInt();
             switch (selection){
@@ -143,24 +142,31 @@ public class MenuUI {
                     System.out.println("Item updated successfully.");
                     break;
                 case 4:
-                    System.out.println("Select new food type: ");
-                    FoodType foodType=FoodType.MAIN;
-                    for(FoodType type:FoodType.values()){
-                        System.out.println(type);
+                    if (cur instanceof ALaCarte) {
+                        System.out.println("Select new food type: ");
+                        FoodType foodType=FoodType.MAIN;
+                        for(int i = 0; i < FoodType.values().length; i++){
+                            System.out.println("[" + (i+1) + "] " + FoodType.values()[i]);
+                        }
+                        int k=sc.nextInt();
+                        if(k>=1&&k<=FoodType.values().length){
+                            foodType=FoodType.values()[k-1];
+                        }
+                        MenuItemManager.updateFoodType(choice,foodType);
+                        System.out.println("Item updated successfully.");
+                        break;
                     }
-                    int k=sc.nextInt();
-                    if(k>=1&&k<=FoodType.values().length){
-                        foodType=FoodType.values()[k-1];
-                    }
-                    MenuItemManager.updateFoodType(choice,foodType);
-                    System.out.println("Item updated successfully.");
-                    break;
-                case 5:
                     MenuItemManager.addItemToSetPackage((SetPackage) cur);
                     break;
-                case 6:
-                    MenuItemManager.removeItemFromSetPackage((SetPackage) cur);
+                case 5:
+                    if (cur instanceof SetPackage) {
+                        MenuItemManager.removeItemFromSetPackage((SetPackage) cur);
+                        break;
+                    }
+                    System.out.println("Invalid value entered");
                     break;
+                default:
+                    System.out.println("Invalid value entered");
             }
 
         }
