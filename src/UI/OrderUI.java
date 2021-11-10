@@ -56,33 +56,33 @@ public class OrderUI {
         Scanner sc = new Scanner(System.in);
         int staffChoice;
         staffChoice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
-        while (staffChoice<=0||staffChoice> Restaurant.stafflist.size()){
-            System.out.println("Staff does not exist. Please enter again: ");
-            staffChoice=sc.nextInt();
-        }
+        // while (staffChoice<=0||staffChoice> Restaurant.stafflist.size()){
+        //     System.out.println("Staff does not exist. Please enter again: ");
+        //     staffChoice=sc.nextInt();
+        // }
 
-        int condition;
+        // int condition;
         int numOfPax,tableChoice;
-            System.out.println("Enter number of pax: 1-11 ");
+        System.out.println("Enter number of pax: 1-12 ");
 
-            numOfPax = IntegerInputHelper.validateInput(1,11);
-            while (numOfPax <= 0) {
-                System.out.println("Invalid input. Please enter an integer larger than 0.");
-                numOfPax = sc.nextInt();
-            }
-            System.out.println("Choose the table of this order: ");
-            if (TableManager.getAvailableTables() == null) {
-                return;
-            }
-            TableManager.printAvailableTables();
+        numOfPax = IntegerInputHelper.validateInput(1,12);
+        // while (numOfPax <= 0) {
+        //     System.out.println("Invalid input. Please enter an integer larger than 0.");
+        //     numOfPax = sc.nextInt();
+        // }
+        System.out.println("Choose the table of this order: ");
+        if (TableManager.getAvailableTables() == null) {
+            return;
+        }
+        TableManager.printAvailableTables();
 
-            tableChoice = IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
-            boolean result = TableManager.validate(numOfPax, tableChoice);
-            while (result == false) {
-                System.out.println("This table cannot be chosen. Please make another choice: ");
-                tableChoice = sc.nextInt();
-                result = TableManager.validate(numOfPax, tableChoice);
-            }
+        tableChoice = IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
+        boolean result = TableManager.validate(numOfPax, tableChoice);
+        while (result == false) {
+            System.out.println("This table cannot be chosen. Please make another choice: ");
+            tableChoice = sc.nextInt();
+            result = TableManager.validate(numOfPax, tableChoice);
+        }
         //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         LocalDateTime now=LocalDateTime.now();
         System.out.println("Does the customer has membership? ('1' for 'Yes','0' for 'No') ");
@@ -107,7 +107,7 @@ public class OrderUI {
         OrderManager.printAllOrders();
         Scanner sc = new Scanner(System.in);
         int choice=sc.nextInt();
-        if(choice>=0&&choice<=Restaurant.orderList.size()){
+        if(choice>0&&choice<=Restaurant.orderList.size()){
             Order curOrder=Restaurant.orderList.get(choice-1);
             System.out.println("Select an option");
             System.out.println("1. update staff ");

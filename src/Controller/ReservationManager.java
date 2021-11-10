@@ -16,7 +16,7 @@ public class ReservationManager {
     public static int addNewReservation(String name, String contact, int numOfPax,LocalDate date, LocalTime time, boolean hasExpired){
         boolean resultD=validateDateTime(date,time);
         if (!resultD){
-            System.out.println("The date and time is before current time. Invalid date.");
+            System.out.println("The date and time is before current time.");
             return -1;
         }
         Table resultT=getReservationTable(date,time,numOfPax);
