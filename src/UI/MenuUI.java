@@ -1,5 +1,6 @@
 package UI;
 
+import Controller.IntegerInputHelper;
 import Controller.MenuItemManager;
 import Entities.ALaCarte;
 import Entities.MenuItem;
@@ -22,8 +23,7 @@ public class MenuUI {
     public static void menuUI(){
         displayOptions();
         Scanner sc = new Scanner(System.in);
-        int option;
-        option=sc.nextInt();
+        int option= IntegerInputHelper.validateInput(1,4);
         while (option<=4&&option>=1){
             switch (option){
                 case 1:
@@ -52,7 +52,7 @@ public class MenuUI {
         Scanner sc2 = new Scanner(System.in);
         int selection;
         System.out.println("Select '1' for a la carte item, Select '2' for set package item, select '0' to return.");
-        selection=sc2.nextInt();
+        selection=IntegerInputHelper.validateInput(0,2);
         switch (selection){
             case 0:
                 return;
@@ -106,7 +106,7 @@ public class MenuUI {
             return;
         Scanner sc=new Scanner(System.in);
         int choice;
-        choice=sc.nextInt();
+        choice=IntegerInputHelper.validateInput(1,Restaurant.menulist.size());
         if (choice>0&&choice<=Restaurant.menulist.size()){
             MenuItem cur=Restaurant.menulist.get(choice-1);
             System.out.println("Select an option");
@@ -119,7 +119,7 @@ public class MenuUI {
             {System.out.println("4. add item to this setPackage");
                 System.out.println("5. remove item from this setPackage");}
             int selection;
-            selection=sc.nextInt();
+            selection=IntegerInputHelper.validateInput(1,5);
             switch (selection){
                 case 1:
                     System.out.println("Enter new name: ");
@@ -148,7 +148,7 @@ public class MenuUI {
                         for(int i = 0; i < FoodType.values().length; i++){
                             System.out.println("[" + (i+1) + "] " + FoodType.values()[i]);
                         }
-                        int k=sc.nextInt();
+                        int k=IntegerInputHelper.validateInput(1,FoodType.values().length);
                         if(k>=1&&k<=FoodType.values().length){
                             foodType=FoodType.values()[k-1];
                         }
@@ -176,8 +176,7 @@ public class MenuUI {
         MenuItemManager.printFullMenu();
         System.out.println("Select an item to remove: ");
         int choice;
-        Scanner sc=new Scanner(System.in);
-        choice=sc.nextInt();
+        choice=IntegerInputHelper.validateInput(1,Restaurant.menulist.size());
         MenuItemManager.deleteMenuItem(choice);
     }
 

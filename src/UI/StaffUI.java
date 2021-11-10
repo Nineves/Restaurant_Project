@@ -1,5 +1,6 @@
 package UI;
 
+import Controller.IntegerInputHelper;
 import Controller.StaffManager;
 import Enums.Gender;
 import Enums.JobTitle;
@@ -19,7 +20,7 @@ public class StaffUI {
     public static void staffUI(){
         displayOptions();
         Scanner sc=new Scanner(System.in);
-        int choice=sc.nextInt();
+        int choice= IntegerInputHelper.validateInput(0,4);
 //        while (choice<1||choice>4){
 //            if (choice==0){
 //                return;
@@ -45,7 +46,7 @@ public class StaffUI {
                     break;
             }
             displayOptions();
-            choice=sc.nextInt();
+            choice=IntegerInputHelper.validateInput(0,4);
         }
     }
 
@@ -71,11 +72,7 @@ public class StaffUI {
         System.out.println("[1] Update name ");
         System.out.println("[2] Update gender");
         System.out.println("[3] Update job title");
-        int selection=sc.nextInt();
-        while (selection<0||selection>4){
-            System.out.println("Invalid input. Please select again: ");
-            selection=sc.nextInt();
-        }
+        int selection=IntegerInputHelper.validateInput(1,3);
         switch (selection){
             case 1:
                 System.out.println("Enter new name: ");
@@ -99,13 +96,8 @@ public class StaffUI {
         System.out.println("Please choose the gender of the staff: ");
         System.out.println("[1] MALE");
         System.out.println("[2] FEMALE");
-        int genderChoice=sc.nextInt();
+        int genderChoice=IntegerInputHelper.validateInput(1,2);
         Gender gender;
-        while(genderChoice!=2&&genderChoice!=1){
-            System.out.println("Invalid choice. Please choose again.");
-            System.out.println("[1] MALE");
-            System.out.println("[2] FEMALE");
-            genderChoice=sc.nextInt();}
         if (genderChoice==1){
             gender=Gender.MALE;
         }
@@ -120,12 +112,8 @@ public class StaffUI {
         System.out.println("[1] WAITER");
         System.out.println("[2] SUPERVISOR");
         System.out.println("[3] MANAGER");
-        int jobChoice=sc.nextInt();
+        int jobChoice=IntegerInputHelper.validateInput(1,3);
         JobTitle jobTitle=JobTitle.WAITER;
-        while (jobChoice<1||jobChoice>3){
-            System.out.println("Invalid choice. Please choose again.");
-            jobChoice=sc.nextInt();
-        }
         switch (jobChoice){
             case 1:
                 jobTitle=JobTitle.WAITER;

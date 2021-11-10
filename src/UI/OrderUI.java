@@ -26,7 +26,7 @@ public class OrderUI {
         displayOptions();
         Scanner sc = new Scanner(System.in);
         int option;
-        option=sc.nextInt();
+        option=IntegerInputHelper.validateInput(1,4);
         while (option<=4&&option>=1){
             switch (option){
                 case 1:
@@ -46,7 +46,7 @@ public class OrderUI {
 
             }
             displayOptions();
-            option=sc.nextInt();
+            option=IntegerInputHelper.validateInput(1,4);
         }
     }
 
@@ -55,7 +55,7 @@ public class OrderUI {
         StaffManager.printStaffList();
         Scanner sc = new Scanner(System.in);
         int staffChoice;
-        staffChoice=sc.nextInt();
+        staffChoice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
         while (staffChoice<=0||staffChoice> Restaurant.stafflist.size()){
             System.out.println("Staff does not exist. Please enter again: ");
             staffChoice=sc.nextInt();
@@ -63,9 +63,9 @@ public class OrderUI {
 
         int condition;
         int numOfPax,tableChoice;
-            System.out.println("Enter number of pax: ");
+            System.out.println("Enter number of pax: 1-11 ");
 
-            numOfPax = sc.nextInt();
+            numOfPax = IntegerInputHelper.validateInput(1,11);
             while (numOfPax <= 0) {
                 System.out.println("Invalid input. Please enter an integer larger than 0.");
                 numOfPax = sc.nextInt();
@@ -76,7 +76,7 @@ public class OrderUI {
             }
             TableManager.printAvailableTables();
 
-            tableChoice = sc.nextInt();
+            tableChoice = IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
             boolean result = TableManager.validate(numOfPax, tableChoice);
             while (result == false) {
                 System.out.println("This table cannot be chosen. Please make another choice: ");
@@ -87,11 +87,7 @@ public class OrderUI {
         LocalDateTime now=LocalDateTime.now();
         System.out.println("Does the customer has membership? ('1' for 'Yes','0' for 'No') ");
         boolean membership=false;
-        int m=sc.nextInt();
-        while (m!=1&&m!=0){
-            System.out.println("Invalid input. Please enter an integer value of 0 or 1.");
-            m=sc.nextInt();
-        }
+        int m=IntegerInputHelper.validateInput(0,1);
         if (m==1){
             membership=true;
         }
@@ -119,11 +115,7 @@ public class OrderUI {
             System.out.println("3. update ordered items ");
             System.out.println("4. update membership ");
             System.out.println("0. Exit ");
-            int selection=sc.nextInt();
-            while (selection<0||selection>3){
-                System.out.println("Invalid choice. Please choose again.");
-                choice=sc.nextInt();
-            }
+            int selection=IntegerInputHelper.validateInput(0,4);
             switch (selection){
                 case 1:
                     changeStaff(curOrder);
@@ -152,11 +144,10 @@ public class OrderUI {
     public static void changeStaff(Order order){
         System.out.println("Select a staff: ");
         StaffManager.printStaffList();
-        Scanner sc=new Scanner(System.in);
-        int choice=sc.nextInt();
+        int choice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
         while (choice<=0||choice>Restaurant.stafflist.size()){
             System.out.println("Invalid selection. Please select again.");
-            choice=sc.nextInt();
+            choice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
         }
         OrderManager.updateStaff(order,choice);
         System.out.println("Staff updated successfully!");
@@ -166,10 +157,10 @@ public class OrderUI {
         System.out.println("Select a table: ");
         TableManager.printAvailableTables();
         Scanner sc=new Scanner(System.in);
-        int choice=sc.nextInt();
+        int choice=IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
         while (choice<=0||choice>Restaurant.tablelist.size()){
             System.out.println("Invalid selection. Please select again.");
-            choice=sc.nextInt();
+            choice=IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
         }
         if (Restaurant.tablelist.get(choice-1).checkAvailability()){
             System.out.println("The table is occupied");
@@ -184,10 +175,9 @@ public class OrderUI {
     }
 
     public static void printOrderInvoice(){
-        Scanner sc = new Scanner(System.in);
         System.out.println("Choose an order: ");
         OrderManager.printAllOrders();
-        int choice=sc.nextInt();
+        int choice=IntegerInputHelper.validateInput(1,Restaurant.orderList.size());
         OrderManager.printInvoice(choice);
 
     }
@@ -196,8 +186,7 @@ public class OrderUI {
         System.out.println("Select an option: ");
         System.out.println("1. add new item");
         System.out.println("2. remove item");
-        Scanner sc=new Scanner(System.in);
-        int selection=sc.nextInt();
+        int selection=IntegerInputHelper.validateInput(0,2);
         switch (selection){
             case 1:
                 OrderManager.addItemsToOrder(order);
@@ -214,11 +203,8 @@ public class OrderUI {
         Scanner sc=new Scanner(System.in);
         System.out.println("Does the customer has membership? ('1' for 'Yes','0' for 'No') ");
         boolean membership=false;
-        int m=sc.nextInt();
-        while (m!=1&&m!=0){
-            System.out.println("Invalid input. Please enter an integer value of 0 or 1.");
-            m=sc.nextInt();
-        }
+        int m=IntegerInputHelper.validateInput(0,1);
+
         if (m==1){
             membership=true;
         }
@@ -232,8 +218,7 @@ public class OrderUI {
         System.out.println("Select an order to remove: ");
         OrderManager.printAllOrders();
         int choice;
-        Scanner sc=new Scanner(System.in);
-        choice=sc.nextInt();
+        choice=IntegerInputHelper.validateInput(1,Restaurant.orderList.size());
         OrderManager.removeOrder(choice);
     }
 

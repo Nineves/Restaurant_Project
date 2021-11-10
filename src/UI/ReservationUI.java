@@ -1,5 +1,7 @@
 package UI;
 
+import Controller.IntegerInputHelper;
+import Controller.LocalDateInputHelper;
 import Controller.ReservationManager;
 import Controller.TableManager;
 import Entities.Reservation;
@@ -26,9 +28,8 @@ public class ReservationUI {
 
     public static void reservationUI(Queue<Reservation> q){
         displayOptions();
-        Scanner sc = new Scanner(System.in);
         int option;
-        option=sc.nextInt();
+        option= IntegerInputHelper.validateInput(0,5);
         while (option<=5&&option>=1){
             switch (option){
                 case 1:
@@ -51,7 +52,7 @@ public class ReservationUI {
 
             }
             displayOptions();
-            option=sc.nextInt();
+            option=IntegerInputHelper.validateInput(0,5);
         }
     }
     public static void addNewReservation(){
@@ -61,16 +62,10 @@ public class ReservationUI {
         System.out.println("Enter contact number: ");
         String contactNum=sc.nextLine();
         System.out.println("Enter number of pax: (min 2 pax, max 10 pax)");
-        int numOfPax=sc.nextInt();
-        while (numOfPax<2||numOfPax>10){
-            System.out.println("Invalid input. Please enter again. (min 2 pax, max 10 pax) ");
-            numOfPax=sc.nextInt();
-        }
+        int numOfPax=IntegerInputHelper.validateInput(2,10);
         System.out.println("Enter reservation date: (in YYYY-MM-DD format)");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        sc.nextLine();
-        String dateString=sc.nextLine();
-        LocalDate date=LocalDate.parse(dateString,dateFormatter);
+        LocalDate date= LocalDateInputHelper.validateInput(dateFormatter);
         System.out.println("Please choose time slot: ");
         System.out.println("[1] 11:00-12:00 ");
         System.out.println("[2] 12:00-13:00 ");
@@ -78,7 +73,7 @@ public class ReservationUI {
         System.out.println("[4] 17:00-18:00 ");
         System.out.println("[5] 18:00-19:00 ");
         System.out.println("[6] 19:00-20:00 ");
-        int choiceOfTime=sc.nextInt();
+        int choiceOfTime=IntegerInputHelper.validateInput(1,6);
         LocalTime time= generateTime(choiceOfTime);
         int result=ReservationManager.addNewReservation(name,contactNum,numOfPax,date,time,false);
         if(result==1){
@@ -129,11 +124,7 @@ public class ReservationUI {
             System.out.println("[2] Update contact number ");
             System.out.println("[3] Change date and time");
             System.out.println("[0] Exit ");
-            int selection=sc.nextInt();
-            while (selection<0||selection>3){
-                System.out.println("Invalid choice. Please choose again.");
-                selection=sc.nextInt();
-            }
+            int selection=IntegerInputHelper.validateInput(0,3);
             switch (selection){
                 case 1:
                     updateName(curReservation);
@@ -180,8 +171,7 @@ public class ReservationUI {
         System.out.println("Current Time: "+r.getLocaltime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         System.out.println("Enter new reservation date: (in YYYY-MM-DD format)");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String dateString=sc.nextLine();
-        LocalDate newDate=LocalDate.parse(dateString,dateFormatter);
+        LocalDate newDate=LocalDateInputHelper.validateInput(dateFormatter);
 
         System.out.println("Please choose a new time slot: ");
         System.out.println("[1] 11:00-12:00 ");
@@ -190,7 +180,7 @@ public class ReservationUI {
         System.out.println("[4] 17:00-18:00 ");
         System.out.println("[5] 18:00-19:00 ");
         System.out.println("[6] 19:00-20:00 ");
-        int choiceOfTime=sc.nextInt();
+        int choiceOfTime=IntegerInputHelper.validateInput(1,6);
         LocalTime newTime= generateTime(choiceOfTime);
         ReservationManager.updateTable(r,newDate,newTime);
     }
