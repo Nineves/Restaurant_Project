@@ -25,7 +25,7 @@ public class GenerateReportUI {
             System.out.println("Please indicate the month: (integer from 1 to 12)");
             int month = IntegerInputHelper.validateInput(1,12);
             System.out.println("Please indicate the year: (2010-2021) ");
-            int year=IntegerInputHelper.validateInput(2010,2021);
+            int year=IntegerInputHelper.validateInput(2020,LocalDate.now().getYear());
             ReportManager.generateByMonth(month,year);
         }
         else {

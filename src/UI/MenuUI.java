@@ -58,7 +58,6 @@ public class MenuUI {
                 return;
             case 1:
                 System.out.println("Please enter the name of the a la carte item: ");
-                sc2.nextLine();
                 String name=sc2.nextLine();
                 System.out.println("Please enter the description of the a la carte item: ");
                 String description=sc2.nextLine();
@@ -85,7 +84,6 @@ public class MenuUI {
                 break;
             case 2:
                 System.out.println("Please enter the name of the set package item: ");
-                sc2.nextLine();
                 name=sc2.nextLine();
                 System.out.println("Please enter the description of the set package item: ");
                 description=sc2.nextLine();
@@ -123,14 +121,14 @@ public class MenuUI {
             switch (selection){
                 case 1:
                     System.out.println("Enter new name: ");
-                    sc.nextLine();
+                    // sc.nextLine();
                     String newName=sc.nextLine();
                     MenuItemManager.updateName(choice,newName);
                     System.out.println("Item updated successfully.");
                     break;
                 case 2:
                     System.out.println("Enter new description: ");
-                    sc.nextLine();
+                    // sc.nextLine();
                     String newDes=sc.nextLine();
                     MenuItemManager.updateDescription(choice,newDes);
                     System.out.println("Item updated successfully.");

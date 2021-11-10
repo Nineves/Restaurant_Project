@@ -29,7 +29,7 @@ public class RRPSSApp {
         
 
         MainUI.displayOptions();
-        int option= IntegerInputHelper.validateInput(1,7);
+        int option= IntegerInputHelper.validateInput(0,7);
 //        Scanner sc= new Scanner(System.in);
 //        try{
 //            option=sc.nextInt();}
@@ -65,7 +65,7 @@ public class RRPSSApp {
                     break;
             }
             MainUI.displayOptions();
-            option=IntegerInputHelper.validateInput(1,7);
+            option=IntegerInputHelper.validateInput(0,7);
         }
 
 

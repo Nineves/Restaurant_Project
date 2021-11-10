@@ -28,22 +28,19 @@ public class OrderManager {
     }
 
     public static void addItemsToOrder(Order order){
-        System.out.println("Choose an item to add: (press 0 to stop)");
         MenuItemManager.printFullMenu();
-        ArrayList<MenuItem> itemList=order.getOrderItems();
-        Scanner sc=new Scanner(System.in);
-        int choice=sc.nextInt();
-        while (choice>0&&choice<=Restaurant.menulist.size()){
+        System.out.println("Choose an item to add: (press 0 to stop)");
+        //ArrayList<MenuItem> itemList=order.getOrderItems();
+        int choice = IntegerInputHelper.validateInput(0, Restaurant.menulist.size());
+        while (choice>0){
             MenuItem curItem=Restaurant.menulist.get(choice-1);
             System.out.println("Enter quantity: ");
-            int q=sc.nextInt();
-            while(q<=0){
-                System.out.println("Invalid input. Please enter again.");
-                q=sc.nextInt();
-            }
+            int maxQty = 10;
+            int q = IntegerInputHelper.validateInput(1, maxQty);
             order.addFood(curItem,q);
+            MenuItemManager.printFullMenu();
             System.out.println("Choose an item to add: (press 0 to stop)");
-            choice=sc.nextInt();
+            choice = IntegerInputHelper.validateInput(0, Restaurant.menulist.size());
         }
 
     }
@@ -78,24 +75,19 @@ public class OrderManager {
             System.out.println("Nothing to be removed from order.");
             return;
         }
-        System.out.println("Choose an item to remove: (press 0 to stop)");
         order.printItemsInOrder();
-        Scanner sc=new Scanner(System.in);
-        int choice;
-        choice=sc.nextInt();
-        while (choice>0&&choice<=order.getOrderItems().size()){
+        System.out.println("Choose an item to remove: (press 0 to stop)");
+        int choice = IntegerInputHelper.validateInput(0, order.getOrderItems().size());
+        while (choice>0){
             System.out.println("Remove quantity: ");
-            int quantity=sc.nextInt();
-            while(quantity<=0){
-                System.out.println("Invalid input. Please enter again. ");
-                quantity=sc.nextInt();
-            }
+            ArrayList<MenuItem> menuItems = order.getOrderItems();
+            String itemName = menuItems.get(choice-1).getName();
+            int quantity = IntegerInputHelper.validateInput(1, order.getQuantityMap().get(itemName));
             order.removeItem(choice,quantity);
-            System.out.println("Choose a item to remove: (press '0' to stop)");
             order.printItemsInOrder();
-            choice=sc.nextInt();
+            System.out.println("Choose a item to remove: (press '0' to stop)");
+            choice = IntegerInputHelper.validateInput(0, order.getOrderItems().size());
         }
-        sc.close();
     }
 
     public static void updateMembership(Order order,boolean m)

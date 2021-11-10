@@ -11,6 +11,8 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.print.attribute.ResolutionSyntax;
+
 public class MenuItemManager {
     //add a lar carte item
     public static void addNewItem(String name, String description, double price, FoodType ft){
@@ -19,7 +21,18 @@ public class MenuItemManager {
             System.out.println("Item already exists!");
             return;
         }
-        Restaurant.menulist.add(newItem);
+        int numOfMain = 0, numOfDrinks = 0, numOfDesserts = 0;
+        for (MenuItem mi: Restaurant.menulist) {
+            if (mi instanceof ALaCarte) {
+                if (((ALaCarte) mi).getFoodType().equals(FoodType.MAIN)) numOfMain++;
+                else if (((ALaCarte) mi).getFoodType().equals(FoodType.DRINKS)) numOfDrinks++;
+                else numOfDesserts++;
+            }
+        }
+        if (ft.equals(FoodType.MAIN)) Restaurant.menulist.add(numOfMain, newItem);
+        else if (ft.equals(FoodType.DRINKS)) Restaurant.menulist.add(numOfMain + numOfDrinks, newItem);
+        else if (ft.equals(FoodType.DESSERT)) Restaurant.menulist.add(numOfMain + numOfDrinks + numOfDesserts, newItem);
+        else Restaurant.menulist.add(newItem);
         System.out.println("A lar carte Item "+ name+" added successfully!");
 
     }
@@ -108,7 +121,6 @@ public class MenuItemManager {
     public static void updateName(int itemIdx,String name){
         MenuItem item=Restaurant.menulist.get(itemIdx-1);
         item.setName(name);
-
     }
 
     public static void updateDescription(int itemIdx,String des){
@@ -124,6 +136,8 @@ public class MenuItemManager {
     public static void updateFoodType(int itemIdx,FoodType ft){
         ALaCarte item= (ALaCarte) Restaurant.menulist.get(itemIdx-1);
         item.setType(ft);
+        Restaurant.menulist.remove(item);
+        addNewItem(item.getName(), item.getDescription(), item.getPrice(), ft);
     }
 
     public static void printFullMenu(){
@@ -147,47 +161,35 @@ public class MenuItemManager {
         ArrayList<MenuItem> main = new ArrayList<MenuItem>();
         ArrayList<MenuItem> drinks = new ArrayList<MenuItem>();
         ArrayList<MenuItem> dessert = new ArrayList<MenuItem>();
-        ArrayList<Integer> mainIdx = new ArrayList<Integer>();
-        ArrayList<Integer> drinksIdx = new ArrayList<Integer>();
-        ArrayList<Integer> dessertIdx = new ArrayList<Integer>();
-        for(int i=0;i<Restaurant.menulist.size();i++){
-            MenuItem currentItem=Restaurant.menulist.get(i);
-            if(currentItem instanceof ALaCarte){
-                ALaCarte item = (ALaCarte) currentItem;
-                if (item.getFoodType() == FoodType.MAIN) {
-                    main.add(item);
-                    mainIdx.add(i+1);
-                }
-                else if (item.getFoodType() == FoodType.DRINKS) {
-                    drinks.add(item);
-                    drinksIdx.add(i+1);
-                }
-                else {
-                    dessert.add(item);
-                    dessertIdx.add(i+1);
-                }
-            }
-        }
+        main = getMainItems();
+        drinks = getDrinkItems();
+        dessert = getDessertItems();
         System.out.println("**********MAINS***********");
-        for (int i = 0; i < main.size(); i++) {
+        int temp, i = 0;
+        while (i < main.size()) {
             MenuItem mi = main.get(i);
-            System.out.print("INDEX "+ mainIdx.get(i));
+            System.out.print("INDEX "+ (i+1));
             mi.printInfo();
             System.out.println();
+            i++;
         }
+        temp = i;
         System.out.println("**********DRINKS***********");
-        for (int i = 0; i < drinks.size(); i++) {
-            MenuItem mi = drinks.get(i);
-            System.out.print("INDEX "+ drinksIdx.get(i));
+        while (i < temp + drinks.size()) {
+            MenuItem mi = drinks.get(i-main.size());
+            System.out.print("INDEX "+ (i+1));
             mi.printInfo();
             System.out.println();
+            i++;
         }
+        temp = i;
         System.out.println("**********DESSERTS***********");
-        for (int i = 0; i < dessert.size(); i++) {
-            MenuItem mi = dessert.get(i);
-            System.out.print("INDEX "+ dessertIdx.get(i));
+        while (i < temp + dessert.size()) {
+            MenuItem mi = dessert.get(i - main.size() - drinks.size());
+            System.out.print("INDEX "+ (i+1));
             mi.printInfo();
             System.out.println();
+            i++;
         }
     }
 
@@ -200,11 +202,11 @@ public class MenuItemManager {
             System.out.println("Menu is empty!");
             return;
         }
-        for(int i=0;i<Restaurant.menulist.size();i++){
-            MenuItem currentItem=Restaurant.menulist.get(i);
-            if(currentItem instanceof SetPackage){
-                System.out.print("INDEX "+(i+1));
-                currentItem.printInfo();
+        for(int i = 0; i < Restaurant.menulist.size(); i++) {
+            MenuItem mi = Restaurant.menulist.get(i);
+            if(mi instanceof SetPackage){
+                System.out.print("INDEX "+ (i + 1));
+                mi.printInfo();
                 System.out.println();}
         }
     }
