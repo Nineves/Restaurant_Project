@@ -2,9 +2,9 @@ package Entities;
 import Enums.FoodType;
 
 public class MenuItem {
-    private String name;
-    private String description;
-    private double price;
+    protected String name;
+    protected String description;
+    protected double price;
     //private FoodType foodtype;
 
     public MenuItem(){}
