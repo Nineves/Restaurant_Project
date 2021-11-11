@@ -22,17 +22,17 @@ public class MenuItemManager {
             return;
         }
         int numOfMain = 0, numOfDrinks = 0, numOfDesserts = 0;
-        for (MenuItem mi: Restaurant.menulist) {
+        for (MenuItem mi: Restaurant.getMenulist()) {
             if (mi instanceof ALaCarte) {
                 if (((ALaCarte) mi).getFoodType().equals(FoodType.MAIN)) numOfMain++;
                 else if (((ALaCarte) mi).getFoodType().equals(FoodType.DRINKS)) numOfDrinks++;
                 else numOfDesserts++;
             }
         }
-        if (ft.equals(FoodType.MAIN)) Restaurant.menulist.add(numOfMain, newItem);
-        else if (ft.equals(FoodType.DRINKS)) Restaurant.menulist.add(numOfMain + numOfDrinks, newItem);
-        else if (ft.equals(FoodType.DESSERT)) Restaurant.menulist.add(numOfMain + numOfDrinks + numOfDesserts, newItem);
-        else Restaurant.menulist.add(newItem);
+        if (ft.equals(FoodType.MAIN)) Restaurant.addMenuItem(numOfMain, newItem);
+        else if (ft.equals(FoodType.DRINKS)) Restaurant.addMenuItem(numOfMain + numOfDrinks, newItem);
+        else if (ft.equals(FoodType.DESSERT)) Restaurant.addMenuItem(numOfMain + numOfDrinks + numOfDesserts, newItem);
+        else Restaurant.addMenuItem(newItem);
         System.out.println("A lar carte Item "+ name+" added successfully!");
 
     }
@@ -45,13 +45,30 @@ public class MenuItemManager {
             return;
         }
         addItemToSetPackage((SetPackage) newItem);
-        Restaurant.menulist.add(newItem);
+        Restaurant.addMenuItem(newItem);
         System.out.println("Set package Item "+ name+" added successfully!");
     }
 
+//    public static void addNewItem(MenuItem item){
+//        if(checkDuplicity(item.getName())){
+//            System.out.println("Item already exists!");
+//            return;
+//        }
+//        if(item instanceof ALaCarte){
+//
+//            Restaurant.menulist.add(item);
+//            System.out.println("A lar carte Item "+ item.getName()+" added successfully!");
+//        }
+//        else if(item instanceof SetPackage){
+//            addItemToSetPackage((SetPackage) item);
+//            Restaurant.menulist.add(item);
+//            System.out.println("Set package Item "+ item.getName()+" added successfully!");
+//        }
+//    }
+
     public static boolean checkDuplicity(String name){
-        for(int i=0;i<Restaurant.menulist.size();i++){
-            MenuItem currentItem=Restaurant.menulist.get(i);
+        for(int i=0;i<Restaurant.getMenulist().size();i++){
+            MenuItem currentItem=Restaurant.getMenulist().get(i);
             String curName=currentItem.getName();
             if(curName.equals(name)){
                 return true;
@@ -61,10 +78,10 @@ public class MenuItemManager {
     }
 
     public static void deleteMenuItem(int index){
-        if(index>0&&index<=Restaurant.menulist.size()){
-            MenuItem itemToBeRemoved=Restaurant.menulist.get(index-1);
+        if(index>0&&index<=Restaurant.getMenulist().size()){
+            MenuItem itemToBeRemoved=Restaurant.getMenulist().get(index-1);
             String name=itemToBeRemoved.getName();
-            Restaurant.menulist.remove(index-1);
+            Restaurant.removeMenuItem(index-1);
             System.out.println("Item "+ name+" removed successfully!");
         }
         else {
@@ -78,8 +95,8 @@ public class MenuItemManager {
         Scanner sc=new Scanner(System.in);
         int choice;
         choice=sc.nextInt();
-        while (choice>0&&choice<=Restaurant.menulist.size()){
-            MenuItem item=Restaurant.menulist.get(choice-1);
+        while (choice>0&&choice<=Restaurant.getMenulist().size()){
+            MenuItem item=Restaurant.getMenulist().get(choice-1);
             if (item instanceof ALaCarte){
                 setPackage.addItem(item);
                 System.out.println(item.getName()+" added successfully.");
@@ -108,7 +125,7 @@ public class MenuItemManager {
     }
 
     public static void updateItem(int index){
-        MenuItem itemToUpdate=Restaurant.menulist.get(index-1);
+        MenuItem itemToUpdate=Restaurant.getMenulist().get(index-1);
         if (itemToUpdate instanceof ALaCarte){
             updateALC(itemToUpdate);
         }
@@ -119,29 +136,29 @@ public class MenuItemManager {
     }
 
     public static void updateName(int itemIdx,String name){
-        MenuItem item=Restaurant.menulist.get(itemIdx-1);
+        MenuItem item=Restaurant.getMenulist().get(itemIdx-1);
         item.setName(name);
     }
 
     public static void updateDescription(int itemIdx,String des){
-        MenuItem item=Restaurant.menulist.get(itemIdx-1);
+        MenuItem item=Restaurant.getMenulist().get(itemIdx-1);
         item.setDescription(des);
     }
 
     public static void updatePrice(int itemIdx,double price){
-        MenuItem item=Restaurant.menulist.get(itemIdx-1);
+        MenuItem item=Restaurant.getMenulist().get(itemIdx-1);
         item.setPrice(price);
     }
 
     public static void updateFoodType(int itemIdx,FoodType ft){
-        ALaCarte item= (ALaCarte) Restaurant.menulist.get(itemIdx-1);
+        ALaCarte item= (ALaCarte) Restaurant.getMenulist().get(itemIdx-1);
         item.setType(ft);
-        Restaurant.menulist.remove(item);
+        Restaurant.getMenulist().remove(item);
         addNewItem(item.getName(), item.getDescription(), item.getPrice(), ft);
     }
 
     public static void printFullMenu(){
-        if (Restaurant.menulist.size()==0){
+        if (Restaurant.getMenulist().size()==0){
             System.out.println("Menu is empty!");
             return;
         }
@@ -154,7 +171,7 @@ public class MenuItemManager {
     }
 
     public static void printALaCarteMenu(){
-        if (Restaurant.menulist.size()==0){
+        if (Restaurant.getMenulist().size()==0){
             System.out.println("Menu is empty!");
             return;
         }
@@ -198,12 +215,12 @@ public class MenuItemManager {
     // System.out.println();
 
     public static void printSetPackageMenu(){
-        if (Restaurant.menulist.size()==0){
+        if (Restaurant.getMenulist().size()==0){
             System.out.println("Menu is empty!");
             return;
         }
-        for(int i = 0; i < Restaurant.menulist.size(); i++) {
-            MenuItem mi = Restaurant.menulist.get(i);
+        for(int i = 0; i < Restaurant.getMenulist().size(); i++) {
+            MenuItem mi = Restaurant.getMenulist().get(i);
             if(mi instanceof SetPackage){
                 System.out.print("INDEX "+ (i + 1));
                 mi.printInfo();
@@ -213,7 +230,7 @@ public class MenuItemManager {
 
     public static ArrayList<MenuItem> getMainItems(){
         ArrayList<MenuItem> mainItems=new ArrayList<MenuItem>();
-        for(MenuItem item:Restaurant.menulist){
+        for(MenuItem item:Restaurant.getMenulist()){
             if(item instanceof ALaCarte){
                 if(((ALaCarte) item).getFoodType().equals(FoodType.MAIN)){
                     mainItems.add(item);
@@ -226,7 +243,7 @@ public class MenuItemManager {
 
     public static ArrayList<MenuItem> getDessertItems(){
         ArrayList<MenuItem> dessertItems=new ArrayList<MenuItem>();
-        for(MenuItem item:Restaurant.menulist){
+        for(MenuItem item:Restaurant.getMenulist()){
             if(item instanceof ALaCarte){
                 if(((ALaCarte) item).getFoodType().equals(FoodType.DESSERT)){
                     dessertItems.add(item);
@@ -239,7 +256,7 @@ public class MenuItemManager {
 
     public static ArrayList<MenuItem> getDrinkItems(){
         ArrayList<MenuItem> drinkItems=new ArrayList<MenuItem>();
-        for(MenuItem item:Restaurant.menulist){
+        for(MenuItem item:Restaurant.getMenulist()){
             if(item instanceof ALaCarte){
                 if(((ALaCarte) item).getFoodType().equals(FoodType.DRINKS)){
                     drinkItems.add(item);

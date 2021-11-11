@@ -163,6 +163,7 @@ public class Order{
         System.out.println("IsCompleted: "+isCompleted);
         System.out.println("Total price: "+ String.format("%.2f", price));
         System.out.println("Staff info: ");
+        printItemsInOrder();
         staff.printStaffInfo();
     }
 
@@ -171,12 +172,16 @@ public class Order{
             System.out.println("No item is in the order.");
             return;
         }
+        System.out.println("----- Items in order -----");
+        System.out.println(String.format("%-50s | %-10s", "Menu Item", "Qty"));
         for(int i=0;i<orderItems.size();i++){
             MenuItem curItem=orderItems.get(i);
+            int qty=this.getQuantityMap().get(curItem.getName());
             System.out.println("INDEX " + (i+1));
-            curItem.printInfo();
+            System.out.println(String.format("%-50s | %-10d", curItem.getName(), qty));
             System.out.println();
         }
+        System.out.println("-----------------");
     }
 
     public int getMonth(){

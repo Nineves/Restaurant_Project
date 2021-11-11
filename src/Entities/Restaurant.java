@@ -13,11 +13,11 @@ import Controller.ReservationManager;
 
 public class Restaurant{
     Scanner scan = new Scanner(System.in);
-    public static ArrayList<Staff> stafflist;
-    public static ArrayList<Table> tablelist;
-    public static ArrayList<MenuItem> menulist;
-    public static ArrayList<Order> orderList;
-    public static ArrayList<Reservation> reservationList;
+    private static ArrayList<Staff> stafflist;
+    private static ArrayList<Table> tablelist;
+    private static ArrayList<MenuItem> menulist;
+    private static ArrayList<Order> orderList;
+    private static ArrayList<Reservation> reservationList;
 
 
     public static void initialRestaurant(){
@@ -28,8 +28,57 @@ public class Restaurant{
         initialReservations();
     }
 
+    public static ArrayList<Order> getOrderList() {
+        return orderList;
+    }
 
+    public static ArrayList<MenuItem> getMenulist() {
+        return menulist;
+    }
 
+    public static ArrayList<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public static ArrayList<Staff> getStafflist() {
+        return stafflist;
+    }
+
+    public static ArrayList<Table> getTablelist() {
+        return tablelist;
+    }
+
+    public static void addMenuItem(MenuItem menuItem){
+        menulist.add(menuItem);
+    }
+
+    public static void addMenuItem(int index, MenuItem menuItem){
+        menulist.add(index,menuItem);
+    }
+
+    public static void removeMenuItem(int index){menulist.remove(index);}
+
+    public static void addStaffList(Staff staff){
+        stafflist.add(staff);
+    }
+
+    public static void removeStaff(int index){stafflist.remove(index);}
+
+    public static void addTableList(Table table){
+        tablelist.add(table);
+    }
+
+    public static void addReservationList(Reservation reservation){
+        reservationList.add(reservation);
+    }
+
+    public static void removeReservation(int index){reservationList.remove(index);}
+
+    public static void addOrderList(Order order){
+        orderList.add(order);
+    }
+
+    public static void removeOrder(int index){orderList.remove(index);}
     //initial setup of tables;
     public static void initialTable(){
         int tableID = 1;
@@ -122,19 +171,19 @@ public class Restaurant{
         o2.addFood(menulist.get(1), 1);
         orderList.add(o2);
         Order o3 = new Order(IDGenerator.generateUniqueId(),stafflist.get(2), tablelist.get(4),true,3, LocalDateTime.of(LocalDate.of(2021,10,6),LocalTime.of(13,21)));
-        o3.addFood(menulist.get(2), 2);
+        o3.addFood(menulist.get(2), 4);
         o3.addFood(menulist.get(3), 3);
-        o3.addFood(menulist.get(4), 4);
+        o3.addFood(menulist.get(4), 2);
         orderList.add(o3);
         Order o4 = new Order(IDGenerator.generateUniqueId(),stafflist.get(1), tablelist.get(6),true,5, LocalDateTime.of(LocalDate.of(2021,10,6),LocalTime.of(15,20)));
-        o3.addFood(menulist.get(2), 2);
-        o3.addFood(menulist.get(3), 3);
-        o3.addFood(menulist.get(4), 4);
+        o4.addFood(menulist.get(1), 2);
+        o4.addFood(menulist.get(3), 3);
+        o4.addFood(menulist.get(9), 1);
         orderList.add(o4);
         Order o5 = new Order(IDGenerator.generateUniqueId(),stafflist.get(0), tablelist.get(9),true,10, LocalDateTime.now());
-        o3.addFood(menulist.get(2), 2);
-        o3.addFood(menulist.get(3), 3);
-        o3.addFood(menulist.get(4), 4);
+        o5.addFood(menulist.get(2), 2);
+        o5.addFood(menulist.get(5), 4);
+        o5.addFood(menulist.get(10), 1);
         orderList.add(o5);
     }
 

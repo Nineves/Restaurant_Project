@@ -17,7 +17,7 @@ public class ReportManager {
         ArrayList<MenuItem> allOrderItems = new ArrayList<MenuItem>();
         Map<String,Integer> allQuantityMap = new HashMap<String,Integer>();
         double totalSales = 0;
-        ArrayList<Order> orderList= Restaurant.orderList;
+        ArrayList<Order> orderList= Restaurant.getOrderList();
         for (int i = 0; i < orderList.size(); i++) {
             Order o = orderList.get(i);
             if (o.getTimeStamp().toLocalDate().equals(date) && o.isCompleted()) { // for orders in that day
@@ -56,7 +56,7 @@ public class ReportManager {
         ArrayList<MenuItem> allOrderItems = new ArrayList<MenuItem>();
         Map<String,Integer> allQuantityMap = new HashMap<String,Integer>();
         double totalSales = 0;
-        ArrayList<Order> orderList= Restaurant.orderList;
+        ArrayList<Order> orderList= Restaurant.getOrderList();
         for(int i=0;i<orderList.size();i++){
             Order o = orderList.get(i);
             if(o.getMonth()==month&&o.getYear()==year && o.isCompleted()){

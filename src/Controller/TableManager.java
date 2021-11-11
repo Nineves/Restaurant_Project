@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class TableManager {
     public static ArrayList<Table> getAvailableTables(){
-        if (Restaurant.tablelist.size()==0){
+        if (Restaurant.getTablelist().size()==0){
             System.out.println("Table list is empty!");
             return null;
         }
         ArrayList<Table> availableTableList = new ArrayList<Table>();
-        for(int i=0;i< Restaurant.tablelist.size();i++){
-            Table curTable=Restaurant.tablelist.get(i);
+        for(int i=0;i< Restaurant.getTablelist().size();i++){
+            Table curTable=Restaurant.getTablelist().get(i);
             if(!curTable.checkAvailability()&&!curTable.checkReserved(LocalDateTime.now())) //the table is not occupied and not reserved in advance
                 //not occupied
                 availableTableList.add(curTable);
@@ -31,13 +31,13 @@ public class TableManager {
     }
 
     public static ArrayList<Table> getAvailableTables(int numOfPax){
-        if (Restaurant.tablelist.size()==0){
+        if (Restaurant.getTablelist().size()==0){
             System.out.println("Table list is empty!");
             return null;
         }
         ArrayList<Table> availableTableList = new ArrayList<Table>();
-        for(int i=0;i< Restaurant.tablelist.size();i++){
-            Table curTable=Restaurant.tablelist.get(i);
+        for(int i=0;i< Restaurant.getTablelist().size();i++){
+            Table curTable=Restaurant.getTablelist().get(i);
             if(!curTable.checkAvailability()&&!curTable.checkReserved(LocalDateTime.now()) && curTable.getCapacity() >= numOfPax) //the table is not occupied and not reserved in advance
                 //not occupied
                 availableTableList.add(curTable);
@@ -51,13 +51,13 @@ public class TableManager {
     }
 
     public static ArrayList<Table> getAvailableTablesLessCurrent(int numOfPax, int currentTableID){
-        if (Restaurant.tablelist.size()==0){
+        if (Restaurant.getTablelist().size()==0){
             System.out.println("Table list is empty!");
             return null;
         }
         ArrayList<Table> availableTableList = new ArrayList<Table>();
-        for(int i=0;i< Restaurant.tablelist.size();i++){
-            Table curTable=Restaurant.tablelist.get(i);
+        for(int i=0;i< Restaurant.getTablelist().size();i++){
+            Table curTable=Restaurant.getTablelist().get(i);
             if (curTable.getTableID() == currentTableID) continue;
             if(!curTable.checkAvailability()&&!curTable.checkReserved(LocalDateTime.now()) && curTable.getCapacity() >= numOfPax) //the table is not occupied and not reserved in advance
                 //not occupied
@@ -100,7 +100,7 @@ public class TableManager {
     }
 
     public static boolean validate(int numOfPax,int idx){
-        Table t=Restaurant.tablelist.get(idx-1);
+        Table t=Restaurant.getTablelist().get(idx-1);
         if (t.getCapacity()>=numOfPax)
             return true;
         else
@@ -108,14 +108,14 @@ public class TableManager {
     }
 
     public static ArrayList<Table> getToReserveTables(LocalDate date,LocalTime time){ //get reserved tables in a time interval
-        if (Restaurant.tablelist.size()==0){
+        if (Restaurant.getTablelist().size()==0){
             System.out.println("Table list is empty!");
             return null;
         }
         ArrayList<Table> toReserveTableList = new ArrayList<Table>();
         int flag;
-        for (int i=0;i<Restaurant.tablelist.size();i++){
-            Table curTable=Restaurant.tablelist.get(i);
+        for (int i=0;i<Restaurant.getTablelist().size();i++){
+            Table curTable=Restaurant.getTablelist().get(i);
             flag=0;
             if (time.isAfter(LocalTime.now().plusHours(1)) || time.isBefore((LocalTime.now().minusHours(1)))) { // if resvn time is not within 1h of current time, just check resvn list
                 if(curTable.isReserved()){

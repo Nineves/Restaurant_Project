@@ -57,7 +57,7 @@ public class OrderUI {
         StaffManager.printStaffList();
         Scanner sc = new Scanner(System.in);
         int staffChoice;
-        staffChoice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
+        staffChoice=IntegerInputHelper.validateInput(1,Restaurant.getOrderList().size());
         // while (staffChoice<=0||staffChoice> Restaurant.stafflist.size()){
         //     System.out.println("Staff does not exist. Please enter again: ");
         //     staffChoice=sc.nextInt();
@@ -102,15 +102,15 @@ public class OrderUI {
     }
 
     public static void updateOrder(){
-        if(Restaurant.orderList.size()==0){
+        if(Restaurant.getOrderList().size()==0){
             System.out.println("No order is available in the list.");
             return; }
         System.out.println("Which order do you want to update?");
         OrderManager.printAllOrders();
         Scanner sc = new Scanner(System.in);
         int choice=sc.nextInt();
-        if(choice>0&&choice<=Restaurant.orderList.size()){
-            Order curOrder=Restaurant.orderList.get(choice-1);
+        if(choice>0&&choice<=Restaurant.getOrderList().size()){
+            Order curOrder=Restaurant.getOrderList().get(choice-1);
             System.out.println("Select an option");
             System.out.println("1. update staff ");
             System.out.println("2. update table ");
@@ -146,10 +146,10 @@ public class OrderUI {
     public static void changeStaff(Order order){
         System.out.println("Select a staff: ");
         StaffManager.printStaffList();
-        int choice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
-        while (choice<=0||choice>Restaurant.stafflist.size()){
+        int choice=IntegerInputHelper.validateInput(1,Restaurant.getStafflist().size());
+        while (choice<=0||choice>Restaurant.getStafflist().size()){
             System.out.println("Invalid selection. Please select again.");
-            choice=IntegerInputHelper.validateInput(1,Restaurant.stafflist.size());
+            choice=IntegerInputHelper.validateInput(1,Restaurant.getStafflist().size());
         }
         OrderManager.updateStaff(order,choice);
         System.out.println("Staff updated successfully!");
@@ -184,7 +184,7 @@ public class OrderUI {
     public static void printOrderInvoice(){
         System.out.println("Choose an order: ");
         OrderManager.printAllOrders();
-        int choice=IntegerInputHelper.validateInput(1,Restaurant.orderList.size());
+        int choice=IntegerInputHelper.validateInput(1,Restaurant.getOrderList().size());
         OrderManager.printInvoice(choice);
 
     }
@@ -225,7 +225,7 @@ public class OrderUI {
         System.out.println("Select an order to remove: ");
         OrderManager.printAllOrders();
         int choice;
-        choice=IntegerInputHelper.validateInput(1,Restaurant.orderList.size());
+        choice=IntegerInputHelper.validateInput(1,Restaurant.getOrderList().size());
         OrderManager.removeOrder(choice);
     }
 

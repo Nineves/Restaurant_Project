@@ -27,7 +27,7 @@ public class ReservationManager {
         resultT.setReserved(true);
         resultT.addToReservationList(LocalDateTime.of(date,time));
         Reservation newR= new Reservation(name,numOfPax,contact,resultT,date,time,hasExpired);
-        Restaurant.reservationList.add(newR);
+        Restaurant.addReservationList(newR);
         return 1;
     }
 
@@ -88,13 +88,13 @@ public class ReservationManager {
     }
 
     public static void printValidReservations() {
-        if (Restaurant.reservationList.size()==0){
+        if (Restaurant.getReservationList().size()==0){
             System.out.println("Reservation list is empty.");
             return;
         }
         System.out.println("All reservations: ");
-        for (int i=0;i<Restaurant.reservationList.size();i++){
-            Reservation curR=Restaurant.reservationList.get(i);
+        for (int i=0;i<Restaurant.getReservationList().size();i++){
+            Reservation curR=Restaurant.getReservationList().get(i);
             if (curR.getHasExpired()==true){
                 continue;
             }
@@ -130,13 +130,13 @@ public class ReservationManager {
     // }
 
     public static void cancelReservation(int index){
-        if(Restaurant.reservationList.size()==0){
+        if(Restaurant.getReservationList().size()==0){
             System.out.println("Error! No reservation is in the list.");
             return;
         }
-        Reservation rToRemove=Restaurant.reservationList.get(index-1);
+        Reservation rToRemove=Restaurant.getReservationList().get(index-1);
         TableManager.removeReservation(rToRemove.getLocaldate(),rToRemove.getLocaltime(),rToRemove.getTable());
-        Restaurant.reservationList.remove(index-1);
+        Restaurant.removeReservation(index-1);
         System.out.println("Reservation is cancelled.");
     }
 
@@ -159,7 +159,7 @@ public class ReservationManager {
 	}
 
 	public static Reservation getReservation(String contactNumber){
-        for(Reservation r:Restaurant.reservationList){
+        for(Reservation r:Restaurant.getReservationList()){
             if(r.getContactNumber().equals(contactNumber)){
                 return r;
             }
@@ -176,7 +176,7 @@ public class ReservationManager {
                 for (int j = 0; j < tableReservationList.size(); j++) {
                     LocalDateTime dt = tableReservationList.get(j);
                     if (checkReservationExpiry(t, dt)) { // if reservation is due to expire
-                        for (Reservation r : Restaurant.reservationList) {
+                        for (Reservation r : Restaurant.getReservationList()) {
                             if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
                                 //Restaurant.reservationList.remove(index);
                                 if (q.size() == 3) { // add reservation to queue

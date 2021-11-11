@@ -15,15 +15,15 @@ import java.time.format.DateTimeFormatter;
 public class OrderManager {
 
     public static void addNewOrder(int staffChoice, int numOfPax, int tableChoice, LocalDateTime timeCreated, boolean membership){
-        Staff s=Restaurant.stafflist.get(staffChoice-1);
-        Table t=Restaurant.tablelist.get(tableChoice-1);
+        Staff s=Restaurant.getStafflist().get(staffChoice-1);
+        Table t=Restaurant.getTablelist().get(tableChoice-1);
         t.setOccupied(true);
         t.setNoOfPax(numOfPax);
         int id=IDGenerator.generateUniqueId();
         Order newOrder= new Order(id,s,t,membership,numOfPax,timeCreated);
         addItemsToOrder(newOrder);
         newOrder.setTimeStamp(timeCreated);
-        Restaurant.orderList.add(newOrder);
+        Restaurant.addOrderList(newOrder);
         System.out.println("Order "+ id +" added successfully!");
     }
 
@@ -31,40 +31,40 @@ public class OrderManager {
         MenuItemManager.printFullMenu();
         System.out.println("Choose an item to add: (press 0 to stop)");
         //ArrayList<MenuItem> itemList=order.getOrderItems();
-        int choice = IntegerInputHelper.validateInput(0, Restaurant.menulist.size());
+        int choice = IntegerInputHelper.validateInput(0, Restaurant.getMenulist().size());
         while (choice>0){
-            MenuItem curItem=Restaurant.menulist.get(choice-1);
+            MenuItem curItem=Restaurant.getMenulist().get(choice-1);
             System.out.println("Enter quantity: ");
             int maxQty = 10;
             int q = IntegerInputHelper.validateInput(1, maxQty);
             order.addFood(curItem,q);
             MenuItemManager.printFullMenu();
             System.out.println("Choose an item to add: (press 0 to stop)");
-            choice = IntegerInputHelper.validateInput(0, Restaurant.menulist.size());
+            choice = IntegerInputHelper.validateInput(0, Restaurant.getMenulist().size());
         }
 
     }
 
     public static void printAllOrders(){
-        if(Restaurant.orderList.size()==0){
+        if(Restaurant.getOrderList().size()==0){
             System.out.println("No order is in the list.");
             return;
         }
-        for (int i=0;i<Restaurant.orderList.size();i++){
-            Order curOrder=Restaurant.orderList.get(i);
+        for (int i=0;i<Restaurant.getOrderList().size();i++){
+            Order curOrder=Restaurant.getOrderList().get(i);
             System.out.println("INDEX "+(i+1));
             curOrder.printInfo();
         }
     }
 
     public static void updateStaff(Order order,int index){
-        Staff newStaff=Restaurant.stafflist.get(index-1);
+        Staff newStaff=Restaurant.getStafflist().get(index-1);
         order.setStaff(newStaff);
     }
 
     public static void updateTable(Order order, int index){
         Table curTable=order.getTable();
-        Table newTable=Restaurant.tablelist.get(index-1);
+        Table newTable=Restaurant.getTablelist().get(index-1);
         newTable.setNoOfPax(curTable.getNoOfPax());
         curTable.resetTable();
         order.setTable(newTable);
@@ -97,10 +97,10 @@ public class OrderManager {
     }
 
     public static void removeOrder(int index){
-        if(index>0&&index<=Restaurant.orderList.size()){
-            Order orderToBeRemoved=Restaurant.orderList.get(index-1);
+        if(index>0&&index<=Restaurant.getOrderList().size()){
+            Order orderToBeRemoved=Restaurant.getOrderList().get(index-1);
             int orderID=orderToBeRemoved.getOrderID();
-            Restaurant.orderList.remove(index-1);
+            Restaurant.removeOrder(index-1);
             System.out.println("Order "+ orderID +" removed successfully!");
         }
         else {
@@ -109,10 +109,10 @@ public class OrderManager {
     }
 
     public static void printInvoice(int idx){
-        if(idx<1||idx>Restaurant.orderList.size()){
+        if(idx<1||idx>Restaurant.getOrderList().size()){
             System.out.println("Order does not exist.");
         }
-        Order order=Restaurant.orderList.get(idx-1);
+        Order order=Restaurant.getOrderList().get(idx-1);
         order.setCompleted();
         Table curTable=order.getTable();
         curTable.setOccupied(false);

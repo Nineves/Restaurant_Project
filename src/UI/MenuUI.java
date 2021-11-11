@@ -100,13 +100,13 @@ public class MenuUI {
     public static void updateItem(){
         MenuItemManager.printFullMenu();
         System.out.println("Which menu item do you want to update? ");
-        if(Restaurant.menulist.size()==0)
+        if(Restaurant.getMenulist().size()==0)
             return;
         Scanner sc=new Scanner(System.in);
         int choice;
-        choice=IntegerInputHelper.validateInput(1,Restaurant.menulist.size());
-        if (choice>0&&choice<=Restaurant.menulist.size()){
-            MenuItem cur=Restaurant.menulist.get(choice-1);
+        choice=IntegerInputHelper.validateInput(1,Restaurant.getMenulist().size());
+        if (choice>0&&choice<=Restaurant.getMenulist().size()){
+            MenuItem cur=Restaurant.getMenulist().get(choice-1);
             System.out.println("Select an option");
             System.out.println("1. update name ");
             System.out.println("2. update description ");
@@ -174,7 +174,7 @@ public class MenuUI {
         MenuItemManager.printFullMenu();
         System.out.println("Select an item to remove: ");
         int choice;
-        choice=IntegerInputHelper.validateInput(1,Restaurant.menulist.size());
+        choice=IntegerInputHelper.validateInput(1,Restaurant.getMenulist().size());
         MenuItemManager.deleteMenuItem(choice);
     }
 

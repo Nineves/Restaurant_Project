@@ -110,15 +110,15 @@ public class ReservationUI {
     }
 
     public static void updateReservation(){
-        if(Restaurant.reservationList.size()==0){
+        if(Restaurant.getReservationList().size()==0){
             System.out.println("No reservation is in the list!" );
         }
         Scanner sc=new Scanner(System.in);
         System.out.println("Choose a reservation to update:" );
         ReservationManager.printValidReservations();
         int choice=sc.nextInt();
-        if (choice>0&&choice<=Restaurant.reservationList.size()){
-            Reservation curReservation=Restaurant.reservationList.get(choice-1);
+        if (choice>0&&choice<=Restaurant.getReservationList().size()){
+            Reservation curReservation=Restaurant.getReservationList().get(choice-1);
             System.out.println("Select an option: ");
             System.out.println("[1] Update customer name ");
             System.out.println("[2] Update contact number ");
