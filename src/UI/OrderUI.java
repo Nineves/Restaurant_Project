@@ -5,11 +5,13 @@ import Entities.Order;
 import Entities.Reservation;
 import Entities.Restaurant;
 import Entities.Staff;
+import Entities.Table;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class OrderUI {
 
@@ -26,7 +28,7 @@ public class OrderUI {
         displayOptions();
         Scanner sc = new Scanner(System.in);
         int option;
-        option=IntegerInputHelper.validateInput(1,4);
+        option=IntegerInputHelper.validateInput(0,4);
         while (option<=4&&option>=1){
             switch (option){
                 case 1:
@@ -46,7 +48,7 @@ public class OrderUI {
 
             }
             displayOptions();
-            option=IntegerInputHelper.validateInput(1,4);
+            option=IntegerInputHelper.validateInput(0,4);
         }
     }
 
@@ -71,18 +73,20 @@ public class OrderUI {
         //     numOfPax = sc.nextInt();
         // }
         System.out.println("Choose the table of this order: ");
-        if (TableManager.getAvailableTables() == null) {
-            return;
+        ArrayList<Table> tables = TableManager.getAvailableTables(numOfPax);
+        if (tables == null) return;
+        TableManager.printAvailableTables(tables);
+        ArrayList<Integer> tableNums = new ArrayList<Integer>();
+        for (Table t: tables) {
+            tableNums.add(t.getTableID());
         }
-        TableManager.printAvailableTables();
-
-        tableChoice = IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
-        boolean result = TableManager.validate(numOfPax, tableChoice);
-        while (result == false) {
-            System.out.println("This table cannot be chosen. Please make another choice: ");
-            tableChoice = sc.nextInt();
-            result = TableManager.validate(numOfPax, tableChoice);
-        }
+        tableChoice = IntegerInputHelper.validateInput(tableNums);
+        // boolean result = TableManager.validate(numOfPax, tableChoice);
+        // while (result == false) {
+        //     System.out.println("This table cannot be chosen. Please make another choice: ");
+        //     tableChoice = sc.nextInt();
+        //     result = TableManager.validate(numOfPax, tableChoice);
+        // }
         //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         LocalDateTime now=LocalDateTime.now();
         System.out.println("Does the customer has membership? ('1' for 'Yes','0' for 'No') ");
@@ -95,8 +99,6 @@ public class OrderUI {
             membership=false;
         }
         OrderManager.addNewOrder(staffChoice,numOfPax,tableChoice,now,membership);
-
-
     }
 
     public static void updateOrder(){
@@ -155,21 +157,26 @@ public class OrderUI {
 
     public static void changeTable(Order order){
         System.out.println("Select a table: ");
-        TableManager.printAvailableTables();
-        Scanner sc=new Scanner(System.in);
-        int choice=IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
-        while (choice<=0||choice>Restaurant.tablelist.size()){
-            System.out.println("Invalid selection. Please select again.");
-            choice=IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
+        ArrayList<Table> tables = TableManager.getAvailableTablesLessCurrent(order.getNumOfPax(), order.getTable().getTableID());
+        if (tables == null) return;
+        TableManager.printAvailableTables(tables);
+        ArrayList<Integer> tableNums = new ArrayList<Integer>();
+        for (Table t: tables) {
+            tableNums.add(t.getTableID());
         }
-        if (Restaurant.tablelist.get(choice-1).checkAvailability()){
-            System.out.println("The table is occupied");
-            return;
-        }
-        if(!TableManager.validate(order.getNumOfPax(), choice)){
-            System.out.println("The table is not big enough.");
-            return;
-        };
+        int choice=IntegerInputHelper.validateInput(tableNums);
+        // while (choice<=0||choice>Restaurant.tablelist.size()){
+        //     System.out.println("Invalid selection. Please select again.");
+        //     choice=IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());
+        // }
+        // if (Restaurant.tablelist.get(choice-1).checkAvailability()){
+        //     System.out.println("The table is occupied");
+        //     return;
+        // }
+        // if(!TableManager.validate(order.getNumOfPax(), choice)){
+        //     System.out.println("The table is not big enough.");
+        //     return;
+        // };
         OrderManager.updateTable(order,choice);
         System.out.println("Table updated successfully!");
     }

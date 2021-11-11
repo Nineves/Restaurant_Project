@@ -30,6 +30,45 @@ public class TableManager {
         return availableTableList;
     }
 
+    public static ArrayList<Table> getAvailableTables(int numOfPax){
+        if (Restaurant.tablelist.size()==0){
+            System.out.println("Table list is empty!");
+            return null;
+        }
+        ArrayList<Table> availableTableList = new ArrayList<Table>();
+        for(int i=0;i< Restaurant.tablelist.size();i++){
+            Table curTable=Restaurant.tablelist.get(i);
+            if(!curTable.checkAvailability()&&!curTable.checkReserved(LocalDateTime.now()) && curTable.getCapacity() >= numOfPax) //the table is not occupied and not reserved in advance
+                //not occupied
+                availableTableList.add(curTable);
+            }
+
+        if(availableTableList.size()==0){
+            System.out.println("No available tables.");
+            return null;
+        }
+        return availableTableList;
+    }
+
+    public static ArrayList<Table> getAvailableTablesLessCurrent(int numOfPax, int currentTableID){
+        if (Restaurant.tablelist.size()==0){
+            System.out.println("Table list is empty!");
+            return null;
+        }
+        ArrayList<Table> availableTableList = new ArrayList<Table>();
+        for(int i=0;i< Restaurant.tablelist.size();i++){
+            Table curTable=Restaurant.tablelist.get(i);
+            if (curTable.getTableID() == currentTableID) continue;
+            if(!curTable.checkAvailability()&&!curTable.checkReserved(LocalDateTime.now()) && curTable.getCapacity() >= numOfPax) //the table is not occupied and not reserved in advance
+                //not occupied
+                availableTableList.add(curTable);
+            }
+        if(availableTableList.size()==0){
+            System.out.println("No available tables.");
+            return null;
+        }
+        return availableTableList;
+    }
 
     public static void printAvailableTables(){
         // int flag=0;
@@ -54,6 +93,12 @@ public class TableManager {
         }
     }
 
+    public static void printAvailableTables(ArrayList<Table> tables){
+        for (int i = 0; i < tables.size(); i++) {
+            tables.get(i).printInfo();
+        }
+    }
+
     public static boolean validate(int numOfPax,int idx){
         Table t=Restaurant.tablelist.get(idx-1);
         if (t.getCapacity()>=numOfPax)
@@ -72,20 +117,41 @@ public class TableManager {
         for (int i=0;i<Restaurant.tablelist.size();i++){
             Table curTable=Restaurant.tablelist.get(i);
             flag=0;
-            if(curTable.isReserved()){
-                ArrayList<LocalDateTime> rList=curTable.getReservationList();
-                for (LocalDateTime dt:rList){
-                    LocalDate d=dt.toLocalDate();
-                    LocalTime t=dt.toLocalTime();
-                    if (d.equals(date) && t.minusHours(1).isBefore(time) && t.plusHours(1).isAfter(time)){
-                        flag=1;
-                        break;
+            if (time.isAfter(LocalTime.now().plusHours(1)) || time.isBefore((LocalTime.now().minusHours(1)))) { // if resvn time is not within 1h of current time, just check resvn list
+                if(curTable.isReserved()){
+                    ArrayList<LocalDateTime> rList=curTable.getReservationList();
+                    for (LocalDateTime dt:rList){
+                        LocalDate d=dt.toLocalDate();
+                        LocalTime t=dt.toLocalTime();
+                        if (d.equals(date) && t.minusHours(1).isBefore(time) && t.plusHours(1).isAfter(time)){
+                            flag=1;
+                            break;
+                        }
+                    }
+    
+                }
+                if (flag==0){
+                    toReserveTableList.add(curTable);
+                }
+            }
+            else {
+                if (!curTable.checkAvailability()) { // every time reservation is within 1 hour of current time, check if table is available also
+                    if(curTable.isReserved()){
+                        ArrayList<LocalDateTime> rList=curTable.getReservationList();
+                        for (LocalDateTime dt:rList){
+                            LocalDate d=dt.toLocalDate();
+                            LocalTime t=dt.toLocalTime();
+                            if (d.equals(date) && t.minusHours(1).isBefore(time) && t.plusHours(1).isAfter(time)){
+                                flag=1;
+                                break;
+                            }
+                        }
+        
+                    }
+                    if (flag==0){
+                        toReserveTableList.add(curTable);
                     }
                 }
-
-            }
-            if (flag==0){
-                toReserveTableList.add(curTable);
             }
         }
         return toReserveTableList;

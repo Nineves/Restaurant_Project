@@ -61,8 +61,8 @@ public class ReservationUI {
         String name=sc.nextLine();
         System.out.println("Enter contact number: ");
         String contactNum=sc.nextLine();
-        System.out.println("Enter number of pax: (min 2 pax, max 10 pax)");
-        int numOfPax=IntegerInputHelper.validateInput(2,10);
+        System.out.println("Enter number of pax: (min 2 pax, max 12 pax)");
+        int numOfPax=IntegerInputHelper.validateInput(2,12);
         System.out.println("Enter reservation date: (in YYYY-MM-DD format)");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date= LocalDateInputHelper.validateInput(dateFormatter);

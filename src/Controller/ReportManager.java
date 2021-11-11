@@ -20,7 +20,7 @@ public class ReportManager {
         ArrayList<Order> orderList= Restaurant.orderList;
         for (int i = 0; i < orderList.size(); i++) {
             Order o = orderList.get(i);
-            if (o.getTimeStamp().toLocalDate().equals(date)) { // for orders in that day
+            if (o.getTimeStamp().toLocalDate().equals(date) && o.isCompleted()) { // for orders in that day
                 ArrayList<MenuItem> orderItems = o.getOrderItems();
                 Map<String, Integer> qtymap = o.getQuantityMap();
                 for (int j = 0; j < orderItems.size(); j++) { //for items in order
@@ -59,7 +59,7 @@ public class ReportManager {
         ArrayList<Order> orderList= Restaurant.orderList;
         for(int i=0;i<orderList.size();i++){
             Order o = orderList.get(i);
-            if(o.getMonth()==month&&o.getYear()==year){
+            if(o.getMonth()==month&&o.getYear()==year && o.isCompleted()){
                 ArrayList<MenuItem> orderItems = o.getOrderItems();
                 Map<String, Integer> qtymap = o.getQuantityMap();
                 for (int j = 0; j < orderItems.size(); j++) { //for items in order

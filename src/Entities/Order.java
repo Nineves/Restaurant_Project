@@ -173,7 +173,9 @@ public class Order{
         }
         for(int i=0;i<orderItems.size();i++){
             MenuItem curItem=orderItems.get(i);
+            System.out.println("INDEX " + (i+1));
             curItem.printInfo();
+            System.out.println();
         }
     }
 
