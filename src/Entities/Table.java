@@ -100,7 +100,7 @@ public class Table{
 
     public boolean checkReserved(LocalDateTime dt){
         for (LocalDateTime dateTime:reservationList){
-            if(dt.isAfter(dateTime.minusMinutes(30))&&dt.isBefore(dateTime.plusMinutes(30))){
+            if(dt.isAfter(dateTime.minusHours(1))&&dt.isBefore(dateTime.plusHours(1))){
                 return true;
             }
         }
