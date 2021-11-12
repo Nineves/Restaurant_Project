@@ -76,11 +76,7 @@ public class OrderUI {
         ArrayList<Table> tables = TableManager.getAvailableTables(numOfPax);
         if (tables == null) return;
         TableManager.printAvailableTables(tables);
-        ArrayList<Integer> tableNums = new ArrayList<Integer>();
-        for (Table t: tables) {
-            tableNums.add(t.getTableID());
-        }
-        tableChoice = IntegerInputHelper.validateInput(tableNums);
+        tableChoice = IntegerInputHelper.validateInput(tables);
         // boolean result = TableManager.validate(numOfPax, tableChoice);
         // while (result == false) {
         //     System.out.println("This table cannot be chosen. Please make another choice: ");
@@ -160,11 +156,7 @@ public class OrderUI {
         ArrayList<Table> tables = TableManager.getAvailableTablesLessCurrent(order.getNumOfPax(), order.getTable().getTableID());
         if (tables == null) return;
         TableManager.printAvailableTables(tables);
-        ArrayList<Integer> tableNums = new ArrayList<Integer>();
-        for (Table t: tables) {
-            tableNums.add(t.getTableID());
-        }
-        int choice=IntegerInputHelper.validateInput(tableNums);
+        int choice=IntegerInputHelper.validateInput(tables);
         // while (choice<=0||choice>Restaurant.tablelist.size()){
         //     System.out.println("Invalid selection. Please select again.");
         //     choice=IntegerInputHelper.validateInput(1,Restaurant.tablelist.size());

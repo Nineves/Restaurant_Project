@@ -29,7 +29,11 @@ public class IntegerInputHelper {
         return result;
     }
 
-    public static int validateInput(ArrayList<Integer> tableNums){
+    public static int validateInput(ArrayList<Table> tables){
+        ArrayList<Integer> tableNums = new ArrayList<Integer>();
+        for (Table t: tables) {
+            tableNums.add(t.getTableID());
+        }
         Scanner sc= new Scanner(System.in);
         boolean valid = false;
         int result=-1;
