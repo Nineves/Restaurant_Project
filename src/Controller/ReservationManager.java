@@ -93,14 +93,21 @@ public class ReservationManager {
             return;
         }
         System.out.println("All reservations: ");
+        int lastTable = 0, valid = 0;
         for (int i=0;i<Restaurant.getReservationList().size();i++){
             Reservation curR=Restaurant.getReservationList().get(i);
             if (curR.getHasExpired()==true){
                 continue;
             }
+            valid = 1;
+            if (curR.getTable().getTableID() != lastTable) {
+                lastTable = curR.getTable().getTableID();
+                System.out.println(String.format("************Table: %d************", curR.getTable().getTableID()));
+            }
             System.out.println("INDEX "+(i+1));
             curR.printInfo();
         }
+        if (valid == 0) System.out.println("No non-expired reservations found.");
     }
 
     public static void updateName(Reservation r, String name){
@@ -176,6 +183,8 @@ public class ReservationManager {
                 for (int j = 0; j < tableReservationList.size(); j++) {
                     LocalDateTime dt = tableReservationList.get(j);
                     if (checkReservationExpiry(t, dt)) { // if reservation is due to expire
+                        int k = 0;
+                        Reservation foundR = null;
                         for (Reservation r : Restaurant.getReservationList()) {
                             if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
                                 //Restaurant.reservationList.remove(index);
@@ -185,8 +194,16 @@ public class ReservationManager {
                                 }
                                 else q.add(r);
                                 r.setHasExpired(true);
+                                foundR = r;
+                                break;
                             }
-                        }       
+                            k++;
+                        }
+                        if (foundR != null) {
+                            ArrayList<Reservation> reservationList = Restaurant.getReservationList();
+                            reservationList.remove(k);
+                            reservationList.add(reservationList.size(), foundR);   
+                        }
                     }
                 }
             }

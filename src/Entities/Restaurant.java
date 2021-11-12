@@ -69,7 +69,17 @@ public class Restaurant{
     }
 
     public static void addReservationList(Reservation reservation){
-        reservationList.add(reservation);
+        int[] numReservationsForTables = new int[10];
+        int idx = 0;
+        for (int i = 0; i < Restaurant.reservationList.size(); i++) {
+            if (!Restaurant.reservationList.get(i).getHasExpired()) {
+                numReservationsForTables[(Restaurant.reservationList.get(i).getTable().getTableID())-1]++;
+            }
+        }
+        for (int i = 1; i <= reservation.getTable().getTableID(); i++) {
+            idx = idx + numReservationsForTables[i-1];
+        }
+        reservationList.add(idx, reservation);
     }
 
     public static void removeReservation(int index){reservationList.remove(index);}
@@ -190,8 +200,9 @@ public class Restaurant{
     public static void initialReservations() {
         reservationList = new ArrayList<Reservation>();
         ReservationManager.addNewReservation("John", "91882888", 3, LocalDate.now(), LocalTime.now().plusSeconds(5), false);
-        ReservationManager.addNewReservation("Sally", "90203202", 4, LocalDate.now(), LocalTime.now().plusMinutes(5), false);
-        ReservationManager.addNewReservation("Tom", "95939392", 5, LocalDate.now(), LocalTime.now().plusSeconds(30), false);
+        ReservationManager.addNewReservation("Sally", "90203202", 4, LocalDate.now(), LocalTime.now().plusSeconds(7), false);
+        ReservationManager.addNewReservation("Tom", "95939392", 5, LocalDate.now(), LocalTime.now().plusSeconds(9), false);
+        ReservationManager.addNewReservation("swag", "94314311", 5, LocalDate.now(), LocalTime.now().plusSeconds(15), false);
     }
 
 }
