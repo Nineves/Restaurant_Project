@@ -111,8 +111,13 @@ public class OrderManager {
     public static void printInvoice(int idx){
         if(idx<1||idx>Restaurant.getOrderList().size()){
             System.out.println("Order does not exist.");
+            return;
         }
         Order order=Restaurant.getOrderList().get(idx-1);
+        if(order.isCompleted()==true){
+            System.out.println("The payment has already been made.");
+            return;
+        }
         order.setCompleted();
         Table curTable=order.getTable();
         curTable.setOccupied(false);
