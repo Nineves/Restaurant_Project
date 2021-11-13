@@ -157,7 +157,7 @@ public class ReservationManager {
 
     }
 
-    public static boolean checkReservationExpiry(Table t, LocalDateTime dt) {
+    public static boolean checkAndRemoveExpiredFromTable(Table t, LocalDateTime dt) {
 		if(LocalDateTime.now().isAfter(dt.plusSeconds(20))) {
 			t.removeReservation(dt);	//Free up table for walk-in customers
             return true;
@@ -175,41 +175,43 @@ public class ReservationManager {
         return null;
     }
 	
-	public static void clearExpiredReservations(ArrayList<Table> tables, Queue<Reservation> q) {
+	public static void mainModifyExpiredReservations(ArrayList<Table> tables, Queue<Reservation> q) {
 		for(int i=0;i<tables.size();i++) {
             Table t = tables.get(i);
             ArrayList<LocalDateTime> tableReservationList = t.getReservationList();
 			if(tableReservationList != null) {
                 for (int j = 0; j < tableReservationList.size(); j++) {
                     LocalDateTime dt = tableReservationList.get(j);
-                    if (checkReservationExpiry(t, dt)) { // if reservation is due to expire
-                        int k = 0;
-                        Reservation foundR = null;
-                        for (Reservation r : Restaurant.getReservationList()) {
-                            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
-                                //Restaurant.reservationList.remove(index);
-                                if (q.size() == 3) { // add reservation to queue
-                                    q.remove();
-                                    q.add(r);
-                                }
-                                else q.add(r);
-                                r.setHasExpired(true);
-                                foundR = r;
-                                break;
-                            }
-                            k++;
-                        }
-                        if (foundR != null) {
-                            ArrayList<Reservation> reservationList = Restaurant.getReservationList();
-                            reservationList.remove(k);
-                            reservationList.add(reservationList.size(), foundR);   
-                        }
+                    if (checkAndRemoveExpiredFromTable(t, dt)) { // if reservation is due to expire
+                        checkAndModifyReservationFromRestaurant(t, dt, q);
                     }
                 }
             }
 		}
-
 	}
 
+    public static void checkAndModifyReservationFromRestaurant(Table t, LocalDateTime dt, Queue<Reservation> q) {
+        int k = 0;
+        Reservation foundR = null;
+        for (Reservation r : Restaurant.getReservationList()) {
+            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
+                //Restaurant.reservationList.remove(index);
+                if (q.size() == 3) { // add reservation to queue
+                    q.remove();
+                    q.add(r);
+                }
+                else q.add(r);
+                r.setHasExpired(true);
+                foundR = r;
+                break;
+            }
+            k++;
+        }
+        if (foundR != null) {
+            ArrayList<Reservation> reservationList = Restaurant.getReservationList();
+            reservationList.remove(k);
+            reservationList.add(reservationList.size(), foundR);   
+        }
+    }
 
 }
