@@ -53,12 +53,16 @@ public class ReservationManager {
             r.setLocaldate(newDate);
             r.setLocaltime(newTime);
             r.setHasExpired(false);
+            newTable.addToReservationList(LocalDateTime.of(newDate,newTime));
+            newTable.setReserved(true);
             System.out.println("New table assigned.");
             return;
         }
+
         //no need to change table
         TableManager.removeReservation(r.getLocaldate(),r.getLocaltime(),r.getTable());
         r.getTable().addToReservationList(LocalDateTime.of(newDate,newTime));
+        r.getTable().setReserved(true);
         r.setLocaldate(newDate);
         r.setLocaltime(newTime);
         r.setHasExpired(false);
@@ -195,7 +199,7 @@ public class ReservationManager {
         Reservation foundR = null;
         for (Reservation r : Restaurant.getReservationList()) {
             if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
-                //Restaurant.reservationList.remove(index);
+                //Restaurant.getReservationList().remove(r);
                 if (q.size() == 3) { // add reservation to queue
                     q.remove();
                     q.add(r);
