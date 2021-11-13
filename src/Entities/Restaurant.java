@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import Controller.ReservationManager;
 
-public class Restaurant{
+public class Restaurant {
     Scanner scan = new Scanner(System.in);
     private static ArrayList<Staff> stafflist;
     private static ArrayList<Table> tablelist;

@@ -183,33 +183,35 @@ public class ReservationManager {
                 for (int j = 0; j < tableReservationList.size(); j++) {
                     LocalDateTime dt = tableReservationList.get(j);
                     if (checkReservationExpiry(t, dt)) { // if reservation is due to expire
-                        int k = 0;
-                        Reservation foundR = null;
-                        for (Reservation r : Restaurant.getReservationList()) {
-                            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
-                                //Restaurant.reservationList.remove(index);
-                                if (q.size() == 3) { // add reservation to queue
-                                    q.remove();
-                                    q.add(r);
-                                }
-                                else q.add(r);
-                                r.setHasExpired(true);
-                                foundR = r;
-                                break;
-                            }
-                            k++;
-                        }
-                        if (foundR != null) {
-                            ArrayList<Reservation> reservationList = Restaurant.getReservationList();
-                            reservationList.remove(k);
-                            reservationList.add(reservationList.size(), foundR);   
-                        }
+                        setExpireReservation(t, dt, q);
                     }
                 }
             }
 		}
-
 	}
 
+    public static void setExpireReservation(Table t, LocalDateTime dt, Queue<Reservation> q) {
+        int k = 0;
+        Reservation foundR = null;
+        for (Reservation r : Restaurant.getReservationList()) {
+            if ((r.getLocaldate().equals(dt.toLocalDate())) && (r.getLocaltime().equals(dt.toLocalTime()) && (r.getTable() == t))) { // find reservation in reservationList
+                //Restaurant.reservationList.remove(index);
+                if (q.size() == 3) { // add reservation to queue
+                    q.remove();
+                    q.add(r);
+                }
+                else q.add(r);
+                r.setHasExpired(true);
+                foundR = r;
+                break;
+            }
+            k++;
+        }
+        if (foundR != null) {
+            ArrayList<Reservation> reservationList = Restaurant.getReservationList();
+            reservationList.remove(k);
+            reservationList.add(reservationList.size(), foundR);   
+        }
+    }
 
 }
