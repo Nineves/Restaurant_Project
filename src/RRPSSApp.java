@@ -20,7 +20,7 @@ public class RRPSSApp {
         
         TimerTask task = new TimerTask() { // to check expiry
             public void run() {
-                ReservationManager.clearExpiredReservations(Restaurant.getTablelist(), q);
+                ReservationManager.mainModifyExpiredReservations(Restaurant.getTablelist(), q);
             }
         };
 
