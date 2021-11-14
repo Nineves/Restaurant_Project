@@ -111,7 +111,7 @@ public class Restaurant {
             tableID++;
         }
         for(int i=0;i<2;i++){
-            tablelist.add(new Table(tableID, 12));
+            tablelist.add(new Table(tableID, 10));
             tableID++;
         }
     }

@@ -65,9 +65,9 @@ public class OrderUI {
 
         // int condition;
         int numOfPax,tableChoice;
-        System.out.println("Enter number of pax: 1-12 ");
+        System.out.println("Enter number of pax: 1-10 ");
 
-        numOfPax = IntegerInputHelper.validateInput(1,12);
+        numOfPax = IntegerInputHelper.validateInput(1,10);
         // while (numOfPax <= 0) {
         //     System.out.println("Invalid input. Please enter an integer larger than 0.");
         //     numOfPax = sc.nextInt();

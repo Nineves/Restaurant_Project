@@ -22,8 +22,7 @@ public class MenuUI {
 
     public static void menuUI(){
         displayOptions();
-        Scanner sc = new Scanner(System.in);
-        int option= IntegerInputHelper.validateInput(1,4);
+        int option= IntegerInputHelper.validateInput(0,4);
         while (option<=4&&option>=1){
             switch (option){
                 case 1:
@@ -44,7 +43,7 @@ public class MenuUI {
             }
             displayOptions();
             //sc.nextLine();
-            option=sc.nextInt();
+            option=IntegerInputHelper.validateInput(0,4);
         }
     }
 
