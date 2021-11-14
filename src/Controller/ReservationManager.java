@@ -162,7 +162,7 @@ public class ReservationManager {
     }
 
     public static boolean checkAndRemoveExpiredFromTable(Table t, LocalDateTime dt) {
-		if(LocalDateTime.now().isAfter(dt.plusSeconds(20))) {
+		if(LocalDateTime.now().isAfter(dt.plusMinutes(1))) {
 			t.removeReservation(dt);	//Free up table for walk-in customers
             return true;
 	    }
@@ -206,6 +206,8 @@ public class ReservationManager {
                 }
                 else q.add(r);
                 r.setHasExpired(true);
+                System.out.println("Current Time: "+LocalDateTime.now());
+                System.out.println("Reservation removed from restaurant successfully.");
                 foundR = r;
                 break;
             }

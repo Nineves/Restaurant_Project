@@ -199,10 +199,10 @@ public class Restaurant {
 
     public static void initialReservations() {
         reservationList = new ArrayList<Reservation>();
-        ReservationManager.addNewReservation("John", "91882888", 3, LocalDate.now(), LocalTime.now().plusSeconds(5), false);
-        ReservationManager.addNewReservation("Sally", "90203202", 4, LocalDate.now(), LocalTime.now().plusSeconds(7), false);
-        ReservationManager.addNewReservation("Tom", "95939392", 5, LocalDate.now(), LocalTime.now().plusSeconds(9), false);
-        ReservationManager.addNewReservation("swag", "94314311", 5, LocalDate.now(), LocalTime.now().plusSeconds(15), false);
+        ReservationManager.addNewReservation("John", "91882888", 3, LocalDate.now(), LocalTime.now().plusMinutes(5), false);
+        ReservationManager.addNewReservation("Sally", "90203202", 4, LocalDate.now(), LocalTime.now().plusMinutes(7), false);
+        ReservationManager.addNewReservation("Tom", "95939392", 5, LocalDate.now(), LocalTime.now().plusMinutes(6), false);
+        ReservationManager.addNewReservation("swag", "94314311", 5, LocalDate.now(), LocalTime.now().plusSeconds(4), false);
     }
 
 }

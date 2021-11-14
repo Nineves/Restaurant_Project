@@ -116,7 +116,6 @@ public class TableManager {
         int flag;
         for (int i=0;i<Restaurant.getTablelist().size();i++){
             Table curTable=Restaurant.getTablelist().get(i);
-            System.out.println(i);
             flag=0;
             if (time.isAfter(LocalTime.now().plusHours(1)) || time.isBefore((LocalTime.now().minusHours(1)))) {// if resvn time is not within 1h of current time, just check resvn list
                 if(curTable.isReserved()){
@@ -128,7 +127,6 @@ public class TableManager {
                             flag=1;
                             break;
                         }
-                        System.out.println(dt);
                     }
     
                 }
